@@ -201,6 +201,8 @@ a:hover {
 
 /* Showcases */
 .showcases {
+    max-width: 1440px;
+    margin: 0 auto;
     padding: 12rem 5%;
 }
 
