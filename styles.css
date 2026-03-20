@@ -43,8 +43,13 @@ h3 {
 }
 
 .highlight {
-    color: #FF7A59;
     font-weight: 600;
+    background: linear-gradient(90deg, #FF7A59 0%, #ffb347 50%, #FF7A59 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: textShine 3s linear infinite;
 }
 
 a {
@@ -62,7 +67,7 @@ a:hover {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 1.2rem 5%;
+    padding: 1.2rem 10%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,39 +95,24 @@ a:hover {
 .hero {
     min-height: 100vh;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 8rem 10% 0;
     /* padding top for navbar */
     position: relative;
-    gap: 4rem;
 }
 
 .hero-content {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     z-index: 2;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.3s;
-}
-
-.hero-image-wrapper {
-    flex: 1;
-    position: relative;
-    width: 100%;
-    max-width: 500px;
-    aspect-ratio: 4/5;
-    border-radius: 4px;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards 0.5s;
-}
-
-.hero-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
 }
 
 @keyframes fadeUp {
@@ -133,7 +123,7 @@ a:hover {
 }
 
 .tagline {
-    font-size: 0.85rem;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     color: var(--text-muted);
@@ -144,7 +134,7 @@ a:hover {
 }
 
 .title {
-    font-size: clamp(2.5rem, 4vw, 5rem);
+    font-size: clamp(4rem, 8vw, 8.5rem);
     line-height: 1.05;
     margin-bottom: 2.5rem;
     color: #ffffff;
@@ -152,14 +142,51 @@ a:hover {
 
 .title i {
     font-style: italic;
-    color: rgba(255, 255, 255, 0.7);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, #ffffff 50%, rgba(255, 255, 255, 0.7) 100%);
+    background-size: 200% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.title .ticker {
+    display: inline-grid;
+    grid-template-areas: "word";
+    align-items: center;
+    justify-items: center;
+}
+
+.title .ticker i {
+    grid-area: word;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: tickerAnim 6s cubic-bezier(0.16, 1, 0.3, 1) infinite, textShine 3s linear infinite;
+}
+
+.title .ticker i:nth-child(1) { animation-delay: 0s, 0s; }
+.title .ticker i:nth-child(2) { animation-delay: 2s, 0s; }
+.title .ticker i:nth-child(3) { animation-delay: 4s, 0s; }
+
+@keyframes tickerAnim {
+    0% { opacity: 0; transform: translateY(20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    25% { opacity: 1; transform: translateY(0); }
+    35% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+@keyframes textShine {
+    to {
+        background-position: 200% center;
+    }
 }
 
 .description {
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     color: rgba(255, 255, 255, 0.8);
-    max-width: 650px;
+    max-width: 750px;
     font-weight: 300;
+    margin: 0 auto;
 }
 
 .scroll-indicator {
@@ -473,7 +500,7 @@ a:hover {
     }
 
     .title {
-        font-size: 4rem;
+        font-size: 6rem;
     }
 
     .footer h2 {
@@ -487,6 +514,6 @@ a:hover {
     }
 
     .title {
-        font-size: 3rem;
+        font-size: 4.5rem;
     }
 }
