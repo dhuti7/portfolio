@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
         const images = document.querySelectorAll('.showcase-img');
-        
+
         images.forEach(img => {
             const rect = img.parentElement.getBoundingClientRect();
             // simple parallax calculation
