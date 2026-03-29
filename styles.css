@@ -64,23 +64,39 @@ a:hover {
     left: 0;
     width: 100%;
     height: 40px;
-    background-color: #ffcc00;
-    background-image: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 20px,
-        rgba(0, 0, 0, 0.1) 20px,
-        rgba(0, 0, 0, 0.1) 40px
-    );
+    background-color: #b7a64f;
     color: #000;
-    font-weight: 700;
-    font-size: 0.85rem;
+    font-weight: 1000;
+    font-size: 0.80rem;
     letter-spacing: 0.15em;
     display: flex;
     align-items: center;
     overflow: hidden;
     z-index: 1001;
-    border-bottom: 2px solid #000;
+}
+
+.construction-ticker::before,
+.construction-ticker::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-image: repeating-linear-gradient(-45deg,
+            rgba(51, 51, 51, 0.85),
+            rgba(51, 51, 51, 0.85) 12px,
+            transparent 12px,
+            transparent 24px);
+    z-index: 10;
+    pointer-events: none;
+}
+
+.construction-ticker::before {
+    top: 0;
+}
+
+.construction-ticker::after {
+    bottom: 0;
 }
 
 .ticker-wrap {
@@ -98,8 +114,13 @@ a:hover {
 }
 
 @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* Navbar */
