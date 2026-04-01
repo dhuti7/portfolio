@@ -4,6 +4,34 @@
     --text-muted: #a1a1aa;
     --accent: #fff;
     --border-color: rgba(255, 255, 255, 0.08);
+    --highlight-color: #FF7A59;
+    --bg-secondary: #0c0c0e;
+    --title-color: #ffffff;
+    --text-desc: rgba(255, 255, 255, 0.8);
+    --mouse-border: rgba(255, 255, 255, 0.3);
+    --showcase-desc: rgba(255, 255, 255, 0.85);
+    --contact-btn-border: rgba(255, 255, 255, 0.2);
+    --shine-1: rgba(255, 255, 255, 0.7);
+    --shine-2: #ffffff;
+    --overlay-dark: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] {
+    --bg-color: #fdfdfd;
+    --text-main: #18181b;
+    --text-muted: #64646f;
+    --accent: #000;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --highlight-color: #d85736;
+    --bg-secondary: #f4f4f6;
+    --title-color: #111118;
+    --text-desc: rgba(0, 0, 0, 0.65);
+    --mouse-border: rgba(0, 0, 0, 0.25);
+    --showcase-desc: rgba(0, 0, 0, 0.75);
+    --contact-btn-border: rgba(0, 0, 0, 0.15);
+    --shine-1: rgba(0, 0, 0, 0.4);
+    --shine-2: #000000;
+    --overlay-dark: rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -44,7 +72,7 @@ h3 {
 
 .highlight {
     font-weight: 600;
-    color: #FF7A59;
+    color: var(--highlight-color);
 }
 
 a {
@@ -81,11 +109,30 @@ a:hover {
 
 .nav-links {
     display: flex;
+    align-items: center;
     list-style: none;
     gap: 2.5rem;
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.theme-toggle:hover {
+    opacity: 0.7;
+    transform: rotate(15deg);
 }
 
 /* Hero Section */
@@ -144,12 +191,12 @@ a:hover {
     font-size: clamp(4rem, 8vw, 8.5rem);
     line-height: 1.05;
     margin-bottom: 2.5rem;
-    color: #ffffff;
+    color: var(--title-color);
 }
 
 .title i {
     font-style: italic;
-    background: linear-gradient(90deg, rgba(255, 255, 255, 0.7) 0%, #ffffff 50%, rgba(255, 255, 255, 0.7) 100%);
+    background: linear-gradient(90deg, var(--shine-1) 0%, var(--shine-2) 50%, var(--shine-1) 100%);
     background-size: 200% auto;
     color: transparent;
     -webkit-background-clip: text;
@@ -226,7 +273,7 @@ a:hover {
 
 .description {
     font-size: 1.35rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--text-desc);
     max-width: 750px;
     font-weight: 300;
     margin: 0 auto;
@@ -244,7 +291,7 @@ a:hover {
 .mouse {
     width: 26px;
     height: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid var(--mouse-border);
     border-radius: 13px;
     position: relative;
 }
@@ -254,7 +301,7 @@ a:hover {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: #ffffff;
+    background: var(--title-color);
     border-radius: 50%;
     top: 8px;
     left: 50%;
@@ -379,7 +426,7 @@ a:hover {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.08);
+    background: var(--overlay-dark);
     transition: background 0.8s ease;
     pointer-events: none;
 }
@@ -410,7 +457,7 @@ a:hover {
 }
 
 .showcase-desc {
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--showcase-desc);
     font-size: 1.0rem;
     margin-bottom: 2.5rem;
     line-height: 1.8;
@@ -438,7 +485,7 @@ a:hover {
 /* About Section */
 .about {
     padding: 12rem 10%;
-    background-color: #0c0c0e;
+    background-color: var(--bg-secondary);
     display: flex;
     justify-content: center;
     border-top: 1px solid var(--border-color);
@@ -483,7 +530,7 @@ a:hover {
 .contact-btn {
     display: inline-block;
     padding: 1.2rem 4rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--contact-btn-border);
     border-radius: 100px;
     font-size: 0.9rem;
     text-transform: uppercase;
