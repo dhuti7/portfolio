@@ -349,7 +349,10 @@ a:hover {
     display: flex;
     gap: 3rem;
     align-items: center;
-    margin-bottom: 12rem;
+    margin-bottom: 8rem;
+    padding: 4rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     opacity: 0;
     transform: translateY(60px);
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
@@ -493,20 +496,55 @@ a:hover {
 }
 
 .about-content {
-    max-width: 800px;
-    text-align: center;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    text-align: left;
+    margin: 0 auto;
+}
+
+.about-img-container {
+    flex: 1;
+    max-width: 380px;
+    border-radius: 12px;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: 0 12px 30px var(--overlay-dark);
+    aspect-ratio: 2 / 3;
+}
+
+.about-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.about-text {
+    flex: 2;
+    max-width: 700px;
 }
 
 .about-content h2 {
     font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.about-subtitle {
+    font-size: 1.4rem;
+    color: var(--text-main);
     margin-bottom: 2.5rem;
+    font-weight: 400;
 }
 
 .about-content p {
-    font-size: 1.3rem;
-    color: var(--text-muted);
-    line-height: 1.9;
-    font-weight: 300;
+    font-size: 1.0rem;
+    color: var(--text-desc);
+    line-height: 1.5;
+    font-weight: 400;
+    text-wrap: pretty;
+    margin-bottom: 1.25rem;
 }
 
 /* Footer */
@@ -566,6 +604,8 @@ a:hover {
     .showcase-item {
         flex-direction: column !important;
         gap: 3rem;
+        padding: 2rem;
+        margin-bottom: 6rem;
     }
 
     .showcase-visuals {
@@ -595,6 +635,16 @@ a:hover {
 
     .footer h2 {
         font-size: 3.5rem;
+    }
+
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 3rem;
+    }
+
+    .about-img-container {
+        max-width: 280px;
     }
 }
 
