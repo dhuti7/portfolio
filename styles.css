@@ -272,7 +272,7 @@ a:hover {
 }
 
 .description {
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     color: var(--text-desc);
     max-width: 750px;
     font-weight: 300;
