@@ -55,7 +55,7 @@
 }
 
 .sig-svg {
-    width: min(80vw, 640px);
+    width: min(72vw, 576px);
     height: auto;
     overflow: visible;
 }

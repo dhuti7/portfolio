@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.target === sigSvg && e.propertyName === 'width') cleanup();
         }
         sigSvg.addEventListener('transitionend', onTransitionEnd);
-        setTimeout(cleanup, 1100); // fallback in case transitionend doesn't fire
+        setTimeout(cleanup, 1900); // fallback in case transitionend doesn't fire
 
         requestAnimationFrame(() => {
-            const RELOCATE_DURATION = 900; // ms
+            const RELOCATE_DURATION = 1600; // ms
             const easing = `${RELOCATE_DURATION}ms cubic-bezier(0.16, 1, 0.3, 1)`;
             sigSvg.style.transition = ['top', 'left', 'width', 'height']
                 .map((prop) => `${prop} ${easing}`)
