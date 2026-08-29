@@ -217,6 +217,57 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Hero ticker — typewriter effect that types/deletes through a list of words
+    // inside the pill badge (data-ticker-words="word1,word2,...").
+    const tickerEl = document.querySelector('.ticker[data-ticker-words]');
+    if (tickerEl) {
+        const words = tickerEl.dataset.tickerWords.split(',').map((w) => w.trim()).filter(Boolean);
+        const wordEl = tickerEl.querySelector('.ticker-word');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (wordEl && words.length > 0) {
+            if (prefersReducedMotion || words.length === 1) {
+                wordEl.textContent = words[0];
+            } else {
+                const TYPE_SPEED = 90;       // ms per character while typing
+                const DELETE_SPEED = 50;     // ms per character while deleting
+                const HOLD_DURATION = 1400;  // ms to sit on a fully-typed word
+                const PAUSE_DURATION = 400;  // ms pause on an empty word before typing the next
+
+                let wordIndex = 0;
+                let charIndex = 0;
+                let deleting = false;
+
+                function tick() {
+                    const current = words[wordIndex % words.length];
+
+                    if (!deleting) {
+                        charIndex++;
+                        wordEl.textContent = current.slice(0, charIndex);
+                        if (charIndex === current.length) {
+                            deleting = true;
+                            setTimeout(tick, HOLD_DURATION);
+                        } else {
+                            setTimeout(tick, TYPE_SPEED);
+                        }
+                    } else {
+                        charIndex--;
+                        wordEl.textContent = current.slice(0, charIndex);
+                        if (charIndex === 0) {
+                            deleting = false;
+                            wordIndex++;
+                            setTimeout(tick, PAUSE_DURATION);
+                        } else {
+                            setTimeout(tick, DELETE_SPEED);
+                        }
+                    }
+                }
+
+                setTimeout(tick, PAUSE_DURATION);
+            }
+        }
+    }
+
     // Intersection Observer for scroll animations
     const observerOptions = {
         root: null,
