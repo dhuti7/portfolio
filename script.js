@@ -129,15 +129,16 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('sig-lock');
             letters.forEach(resetLetter);
 
-            const LETTER_DURATION = 1;      // ms each letter takes to draw
-            const GAP_BETWEEN_LETTERS = 60; // ms pause before the next letter starts
-            const GAP_AFTER_WORD = 220;     // extra pause after a word-ending letter
-
+            // Each stroke carries its own draw duration and the pause before the next
+            // stroke starts (data-duration/data-gap): 0 gap between a multi-stroke
+            // letter's own strokes (e.g. D's stem then bowl), a small gap between
+            // different letters, and a longer gap after a word-ending stroke.
             let t = 0;
             letters.forEach((path) => {
-                const isWordEnd = path.dataset.wordEnd === '1';
-                setTimeout(() => drawLetter(path, LETTER_DURATION), t);
-                t += LETTER_DURATION + (isWordEnd ? GAP_AFTER_WORD : GAP_BETWEEN_LETTERS);
+                const duration = parseInt(path.dataset.duration, 10) || 1;
+                const gap = parseInt(path.dataset.gap, 10) || 0;
+                setTimeout(() => drawLetter(path, duration), t);
+                t += duration + gap;
             });
 
             const HOLD_AFTER_DRAW = 900; // ms to sit on the completed signature before transitioning away

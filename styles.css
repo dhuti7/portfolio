@@ -66,7 +66,7 @@
     stroke-linejoin: round;
 }
 
-/* "dhuti" strokes thicker than the rest of "Hey, I am" in the opening intro */
+/* "DHUTI" strokes thicker than the rest of "Hey, I am" in the opening intro */
 .sig-intro .letter[data-nav-keep="1"] {
     stroke-width: 10px;
 }
