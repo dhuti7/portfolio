@@ -291,6 +291,20 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(item);
     });
 
+    // "View case study" cursor — follows the mouse and shows while hovering a showcase card
+    const viewCursor = document.querySelector('.view-cursor');
+    if (viewCursor && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.addEventListener('mousemove', (e) => {
+            viewCursor.style.left = `${e.clientX}px`;
+            viewCursor.style.top = `${e.clientY}px`;
+        });
+
+        showcaseItems.forEach(item => {
+            item.addEventListener('mouseenter', () => viewCursor.classList.add('is-active'));
+            item.addEventListener('mouseleave', () => viewCursor.classList.remove('is-active'));
+        });
+    }
+
     // Optional subtle parallax on images
     window.addEventListener('scroll', () => {
         const scrolled = window.scrollY;
