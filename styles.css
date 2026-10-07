@@ -371,6 +371,12 @@ body.intro-done .hero-content {
     white-space: nowrap;
 }
 
+/* Zero-width space keeps a line box in the word even when it's fully deleted,
+   so the pill's height (and the surrounding line spacing) never collapses. */
+.hero-statement .ticker-word::after {
+    content: "\200B";
+}
+
 .hero-statement .ticker-cursor {
     width: 0.05em;
     min-width: 2px;
