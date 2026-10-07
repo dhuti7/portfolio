@@ -20,7 +20,7 @@
     --accent: #FFFFFF;
     --on-accent: #FFFFFF;
     --border-color: rgba(179, 179, 179, 0.35);
-    --highlight-color: #E61E32;
+    --highlight-color: #EE6270; /* softer tint of crimson #E61E32 (30% toward white) for dark mode */
     --bg-secondary: #1F1F1F;
     --title-color: #FFFFFF;
     --text-desc: rgba(255, 255, 255, 0.8);
@@ -28,7 +28,7 @@
     --showcase-desc: rgba(255, 255, 255, 0.85);
     --metric-text: #B3B3B3;
     --contact-btn-border: #B3B3B3;
-    --ticker-bg: rgba(230, 30, 50, 0.18);
+    --ticker-bg: rgba(238, 98, 112, 0.14);
     --overlay-dark: rgba(0, 0, 0, 0.12);
 }
 
