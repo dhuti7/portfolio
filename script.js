@@ -3,6 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const sigIntro = document.getElementById('sig-intro');
     const navLogo = document.getElementById('nav-logo');
 
+    // Crops an SVG's viewBox tightly around the given stroke paths so the signature
+    // scales to its container instead of shrinking inside a mostly-empty canvas.
+    function cropSigViewBox(svg, paths) {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        paths.forEach((path) => {
+            const box = path.getBBox();
+            minX = Math.min(minX, box.x);
+            minY = Math.min(minY, box.y);
+            maxX = Math.max(maxX, box.x + box.width);
+            maxY = Math.max(maxY, box.y + box.height);
+        });
+        const pad = 14;
+        svg.setAttribute(
+            'viewBox',
+            `${minX - pad} ${minY - pad} ${(maxX - minX) + pad * 2} ${(maxY - minY) + pad * 2}`
+        );
+    }
+
     // Moves the signature SVG out of the intro overlay and into the nav logo slot.
     // When `animate` is true, it uses a FLIP transition (fixed-position "from" rect
     // animated to the resting "to" rect) so the signature visibly shrinks and slides
@@ -64,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(cleanup, 1900); // fallback in case transitionend doesn't fire
 
         requestAnimationFrame(() => {
-            const RELOCATE_DURATION = 1600; // ms
+            const RELOCATE_DURATION = 1000; // ms
             const easing = `${RELOCATE_DURATION}ms cubic-bezier(0.16, 1, 0.3, 1)`;
             sigSvg.style.transition = ['top', 'left', 'width', 'height']
                 .map((prop) => `${prop} ${easing}`)
@@ -88,24 +106,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const sigSvg = sigIntro.querySelector('.sig-svg');
         const letters = Array.from(sigIntro.querySelectorAll('.sig-svg .letter'));
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // The intro plays once per visit (browser session); the inline script in
+        // index.html's <head> flags repeat loads so the overlay never flashes.
+        const introSeen = document.documentElement.classList.contains('sig-intro-seen');
+        try { sessionStorage.setItem('sigIntroSeen', '1'); } catch (e) { /* storage blocked: intro just plays every load */ }
 
         // Crop the viewBox tightly around the drawn strokes so the signature scales
         // cleanly down to logo size later, instead of shrinking inside a mostly-empty canvas.
-        if (sigSvg && letters.length > 0) {
-            let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-            letters.forEach((path) => {
-                const box = path.getBBox();
-                minX = Math.min(minX, box.x);
-                minY = Math.min(minY, box.y);
-                maxX = Math.max(maxX, box.x + box.width);
-                maxY = Math.max(maxY, box.y + box.height);
-            });
-            const pad = 14;
-            sigSvg.setAttribute(
-                'viewBox',
-                `${minX - pad} ${minY - pad} ${(maxX - minX) + pad * 2} ${(maxY - minY) + pad * 2}`
-            );
-        }
+        if (sigSvg && letters.length > 0) cropSigViewBox(sigSvg, letters);
 
         function resetLetter(path) {
             const len = path.getTotalLength();
@@ -122,6 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (letters.length === 0) {
             finishSigIntro(sigIntro, sigSvg, false);
+        } else if (introSeen) {
+            // Already played earlier in this visit: skip straight to the nav logo with
+            // just the "Dhuti" strokes (cropped after the move — getBBox is 0 while hidden).
+            const navKeepLetters = letters.filter((path) => path.dataset.navKeep === '1');
+            if (navKeepLetters.length > 0) {
+                letters.filter((path) => path.dataset.navKeep !== '1').forEach((path) => path.remove());
+            }
+            finishSigIntro(sigIntro, sigSvg, false);
+            cropSigViewBox(sigSvg, navKeepLetters.length > 0 ? navKeepLetters : letters);
         } else if (prefersReducedMotion) {
             letters.forEach((path) => { path.style.strokeDashoffset = 0; });
             finishSigIntro(sigIntro, sigSvg, false);
@@ -141,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 t += duration + gap;
             });
 
-            const HOLD_AFTER_DRAW = 900; // ms to sit on the completed signature before transitioning away
+            const HOLD_AFTER_DRAW = 500; // ms to sit on the completed signature before transitioning away
             setTimeout(() => {
                 // If some letters are flagged data-nav-keep="1" (e.g. just "dhuti" out of
                 // "Hey, I am dhuti"), fade the rest out and re-crop the viewBox to only
@@ -159,20 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     setTimeout(() => {
                         dropLetters.forEach((path) => path.remove());
-
-                        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-                        navKeepLetters.forEach((path) => {
-                            const box = path.getBBox();
-                            minX = Math.min(minX, box.x);
-                            minY = Math.min(minY, box.y);
-                            maxX = Math.max(maxX, box.x + box.width);
-                            maxY = Math.max(maxY, box.y + box.height);
-                        });
-                        const pad = 14;
-                        sigSvg.setAttribute(
-                            'viewBox',
-                            `${minX - pad} ${minY - pad} ${(maxX - minX) + pad * 2} ${(maxY - minY) + pad * 2}`
-                        );
+                        cropSigViewBox(sigSvg, navKeepLetters);
 
                         finishSigIntro(sigIntro, sigSvg, true);
                     }, FADE_DURATION);
@@ -182,7 +186,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }, t + HOLD_AFTER_DRAW);
         }
     } else {
-        // No intro overlay on this page — let the hero content animate in normally.
+        // No intro overlay on this page — the nav already holds a static copy of the
+        // signature, so just crop it to size and let the hero content animate in normally.
+        const navSig = navLogo && navLogo.querySelector('.sig-svg');
+        if (navSig) cropSigViewBox(navSig, Array.from(navSig.querySelectorAll('.letter')));
         document.body.classList.add('intro-done');
     }
 
@@ -300,6 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         showcaseItems.forEach(item => {
+            if (!item.querySelector('.showcase-link')) return; // unlinked cards (e.g. Camino) aren't clickable
             item.addEventListener('mouseenter', () => viewCursor.classList.add('is-active'));
             item.addEventListener('mouseleave', () => viewCursor.classList.remove('is-active'));
         });

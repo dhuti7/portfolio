@@ -1,34 +1,52 @@
+/* Palette (All assets/Colour Palette.jpg): black #000000, crimson red #E61E32,
+   pure white #FFFFFF, steel grey #B3B3B3. Crimson is the accent in both modes (it
+   reads at 4.6:1 on black and on white). Steel grey is too light for text on white
+   (2.1:1), so day mode uses a darker steel #6B6B6B for muted text. */
+
+/* Type pairing (balanced after sheethaljacob.com): Montserrat carries ~95% of the
+   site — headings, body, labels, numbers. DM Serif Text italic is a rare accent for
+   a handful of short, voice-y lines: the About subtitle, the contact CTA and
+   case-study pull quotes. */
 :root {
-    --bg-color: #08080a;
-    --text-main: #f4f4f5;
-    --text-muted: #a1a1aa;
-    --accent: #fff;
-    --border-color: rgba(255, 255, 255, 0.08);
-    --highlight-color: #FF7A59;
-    --bg-secondary: #0c0c0e;
-    --title-color: #ffffff;
-    --text-desc: rgba(255, 255, 255, 0.8);
-    --mouse-border: rgba(255, 255, 255, 0.3);
-    --showcase-desc: rgba(255, 255, 255, 0.85);
-    --contact-btn-border: rgba(255, 255, 255, 0.2);
-    --ticker-bg: rgba(255, 122, 89, 0.14);
-    --overlay-dark: rgba(0, 0, 0, 0.08);
+    --font-serif: 'DM Serif Text', Georgia, serif;
+    --font-sans: 'Montserrat', system-ui, sans-serif;
 }
 
+/* Night */
+:root {
+    --bg-color: #000000;
+    --text-main: #FFFFFF;
+    --text-muted: #B3B3B3;
+    --accent: #FFFFFF;
+    --on-accent: #FFFFFF;
+    --border-color: rgba(179, 179, 179, 0.35);
+    --highlight-color: #E61E32;
+    --bg-secondary: #1F1F1F;
+    --title-color: #FFFFFF;
+    --text-desc: rgba(255, 255, 255, 0.8);
+    --mouse-border: #B3B3B3;
+    --showcase-desc: rgba(255, 255, 255, 0.85);
+    --contact-btn-border: #B3B3B3;
+    --ticker-bg: rgba(230, 30, 50, 0.18);
+    --overlay-dark: rgba(0, 0, 0, 0.12);
+}
+
+/* Day */
 [data-theme="light"] {
-    --bg-color: #fdfdfd;
-    --text-main: #18181b;
-    --text-muted: #64646f;
-    --accent: #000;
-    --border-color: rgba(0, 0, 0, 0.1);
-    --highlight-color: #d85736;
-    --bg-secondary: #f4f4f6;
-    --title-color: #111118;
-    --text-desc: rgba(0, 0, 0, 0.65);
-    --mouse-border: rgba(0, 0, 0, 0.25);
-    --showcase-desc: rgba(0, 0, 0, 0.75);
-    --contact-btn-border: rgba(0, 0, 0, 0.15);
-    --ticker-bg: rgba(216, 87, 54, 0.14);
+    --bg-color: #FFFFFF;
+    --text-main: #000000;
+    --text-muted: #6B6B6B;
+    --accent: #000000;
+    --on-accent: #FFFFFF;
+    --border-color: #B3B3B3;
+    --highlight-color: #E61E32;
+    --bg-secondary: #ECECEC;
+    --title-color: #000000;
+    --text-desc: rgba(0, 0, 0, 0.72);
+    --mouse-border: #B3B3B3;
+    --showcase-desc: rgba(0, 0, 0, 0.8);
+    --contact-btn-border: #B3B3B3;
+    --ticker-bg: rgba(230, 30, 50, 0.12);
     --overlay-dark: rgba(0, 0, 0, 0.04);
 }
 
@@ -44,6 +62,11 @@
     opacity: 1;
     visibility: visible;
     transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+/* Intro already played this visit: hide the overlay before it can paint */
+html.sig-intro-seen .sig-intro {
+    display: none;
 }
 
 .sig-intro.sig-intro--done {
@@ -94,7 +117,7 @@ html {
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -113,13 +136,33 @@ body {
 h1,
 h2,
 h3 {
-    font-family: 'Playfair Display', serif;
-    font-weight: 400;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    letter-spacing: -0.015em;
 }
 
 .highlight {
     font-weight: 600;
     color: var(--highlight-color);
+}
+
+/* Let the `hidden` attribute win over display rules like .showcase-item { display: flex } */
+[hidden] {
+    display: none !important;
+}
+
+::selection {
+    background: var(--highlight-color);
+    color: var(--on-accent);
+}
+
+:focus-visible {
+    outline: 2px solid var(--highlight-color);
+    outline-offset: 3px;
+}
+
+html {
+    scrollbar-color: #B3B3B3 transparent;
 }
 
 a {
@@ -129,7 +172,7 @@ a {
 }
 
 a:hover {
-    opacity: 0.7;
+    color: var(--highlight-color);
 }
 
 
@@ -178,6 +221,31 @@ a:hover {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
+}
+
+/* Handwritten nav words (Work / About / Resume) drawn as strokes that follow the theme color */
+.nav-word-link {
+    display: flex;
+    align-items: center;
+}
+
+.nav-word {
+    height: 20px;
+    width: auto;
+    overflow: visible;
+    display: block;
+}
+
+/* Each word's artwork has a different viewBox height, so a stroke-width in SVG units
+   renders at a different thickness per word once scaled to 20px. Non-scaling strokes
+   keep every word the same on-screen thickness. */
+.nav-word path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.3px;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .theme-toggle {
@@ -251,7 +319,7 @@ body.intro-done .hero-content {
     color: var(--text-muted);
     margin-bottom: 2rem;
     display: inline-block;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 2px solid var(--highlight-color);
     padding-bottom: 0.5rem;
 }
 
@@ -353,7 +421,7 @@ body.intro-done .scroll-indicator {
     position: absolute;
     width: 4px;
     height: 4px;
-    background: var(--title-color);
+    background: var(--highlight-color);
     border-radius: 50%;
     top: 8px;
     left: 50%;
@@ -394,7 +462,7 @@ body.intro-done .scroll-indicator {
 .section-header p {
     color: var(--text-muted);
     font-size: 1.1rem;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 300;
 }
 
@@ -423,7 +491,7 @@ body.intro-done .scroll-indicator {
 }
 
 .showcase-item:hover {
-    border-color: var(--mouse-border);
+    border-color: var(--highlight-color);
 }
 
 /* "View case study" pill that follows the pointer on card hover (Figma: Portfolio website / Cursor 150:44).
@@ -438,7 +506,7 @@ body.intro-done .scroll-indicator {
     justify-content: center;
     padding: 7.5px 7px;
     border-radius: 10.5px;
-    background-color: #fff;
+    background-color: var(--text-main);
     pointer-events: none;
     opacity: 0;
     transform: translate(14px, 18px) scale(0.6);
@@ -456,11 +524,11 @@ body.intro-done .scroll-indicator {
 }
 
 .view-cursor-label {
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 400;
     font-size: 10px;
     line-height: normal;
-    color: #000;
+    color: var(--bg-color);
     white-space: nowrap;
 }
 
@@ -499,6 +567,7 @@ body.intro-done .scroll-indicator {
     position: relative;
     overflow: hidden;
     border-radius: 2px;
+    border: 1px solid var(--border-color);
     aspect-ratio: 16/9;
 }
 
@@ -512,7 +581,7 @@ body.intro-done .scroll-indicator {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--text-main);
+    color: var(--highlight-color);
     margin-bottom: 0.8rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid var(--border-color);
@@ -566,7 +635,7 @@ body.intro-done .scroll-indicator {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--text-muted);
+    color: var(--highlight-color);
     margin-bottom: 0.5rem;
     display: inline-block;
     padding-bottom: 0.25rem;
@@ -603,6 +672,7 @@ body.intro-done .scroll-indicator {
 
 .view-btn:hover .arrow {
     transform: translateX(8px);
+    color: var(--highlight-color);
 }
 
 /* About Section */
@@ -631,6 +701,7 @@ body.intro-done .scroll-indicator {
     overflow: hidden;
     flex-shrink: 0;
     box-shadow: 0 12px 30px var(--overlay-dark);
+    border: 1px solid var(--border-color);
     aspect-ratio: 2 / 3;
 }
 
@@ -653,9 +724,12 @@ body.intro-done .scroll-indicator {
 
 .about-subtitle {
     font-size: 1.4rem;
-    color: var(--text-main);
+    color: var(--highlight-color);
     margin-bottom: 2.5rem;
+    font-family: var(--font-serif);
+    font-style: italic;
     font-weight: 400;
+    letter-spacing: 0;
 }
 
 .about-content p {
@@ -695,16 +769,16 @@ body.intro-done .scroll-indicator {
     padding: 1.2rem 4rem;
     border: 1px solid var(--contact-btn-border);
     border-radius: 100px;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.35rem;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .contact-btn:hover {
-    background: var(--text-main);
-    color: var(--bg-color);
-    border-color: var(--text-main);
+    background: var(--highlight-color);
+    color: var(--on-accent);
+    border-color: var(--highlight-color);
 }
 
 .footer-bottom {
@@ -730,7 +804,7 @@ body.intro-done .scroll-indicator {
     bottom: 30px;
     right: 30px;
     z-index: 1000;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
 }
 
 .chatbot-fab {
@@ -738,7 +812,7 @@ body.intro-done .scroll-indicator {
     height: 60px;
     border-radius: 50%;
     background-color: var(--highlight-color);
-    color: #fff;
+    color: var(--on-accent);
     border: none;
     cursor: pointer;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
@@ -807,7 +881,7 @@ body.intro-done .scroll-indicator {
     height: 36px;
     border-radius: 50%;
     background-color: var(--highlight-color);
-    color: #fff;
+    color: var(--on-accent);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -822,7 +896,7 @@ body.intro-done .scroll-indicator {
     font-size: 0.95rem;
     color: var(--title-color);
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     font-weight: 500;
 }
 
@@ -912,7 +986,7 @@ body.intro-done .scroll-indicator {
 
 .message.user .message-content {
     background-color: var(--highlight-color);
-    color: #fff;
+    color: var(--on-accent);
     border-bottom-right-radius: 4px;
 }
 
@@ -947,7 +1021,7 @@ body.intro-done .scroll-indicator {
 
 .chatbot-input-area button {
     background-color: var(--highlight-color);
-    color: #fff;
+    color: var(--on-accent);
     border: none;
     border-radius: 50%;
     width: 38px;
@@ -1083,6 +1157,8 @@ body.intro-done .scroll-indicator {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.25rem;
     margin-bottom: 3rem;
 }
 
@@ -1123,6 +1199,7 @@ body.intro-done .scroll-indicator {
         font-size: 2.4rem;
     }
 }
+
 /* Case study wireframe (shared by all case study pages) */
 .cs {
     max-width: 1200px;
@@ -1137,7 +1214,7 @@ body.intro-done .scroll-indicator {
 }
 
 .cs h3 {
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
     font-size: 1.05rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
@@ -1149,7 +1226,7 @@ body.intro-done .scroll-indicator {
     font-weight: 300;
 }
 
-.cs-body > .cs-section > p,
+.cs-body>.cs-section>p,
 .cs-subtitle {
     max-width: 68ch;
     margin-bottom: 1.25rem;
@@ -1160,8 +1237,22 @@ body.intro-done .scroll-indicator {
     margin-bottom: 3rem;
 }
 
-.cs-hero .case-back {
-    display: table;
+.cs-tags {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.cs-tags li {
+    padding: 0.4rem 0.9rem;
+    border: 1px solid var(--mouse-border);
+    border-radius: 999px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
 }
 
 .cs-title {
@@ -1192,6 +1283,13 @@ body.intro-done .scroll-indicator {
     letter-spacing: 0.15em;
     color: var(--text-muted);
     margin-bottom: 0.4rem;
+}
+
+/* Inside a section (e.g. TL;DR) the details sit right under the label, no divider */
+.cs-section .cs-details {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
 }
 
 .cs-details dd {
@@ -1323,7 +1421,8 @@ body.intro-done .scroll-indicator {
 
 .cs-stat-num {
     display: block;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-sans);
+    font-weight: 600;
     font-size: 3rem;
     line-height: 1;
     color: var(--highlight-color);
@@ -1408,7 +1507,8 @@ body.intro-done .scroll-indicator {
 }
 
 .cs-insight-num {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-sans);
+    font-weight: 600;
     font-size: 2rem;
     color: var(--highlight-color);
     line-height: 1;
@@ -1422,7 +1522,7 @@ body.intro-done .scroll-indicator {
 }
 
 .cs .cs-quote p {
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-serif);
     font-style: italic;
     font-size: 1.6rem;
     line-height: 1.4;
