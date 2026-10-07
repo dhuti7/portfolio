@@ -1,3 +1,14 @@
 
 # Local-only assets
 /In-use assets/
+# Source/production files — used to make site assets, never published
+/All assets/
+/Perfect Binding Letter Magazine Mockup/
+/Free-US-Letter-Flyer-Poster-Mockup-Angled-View/
+/MD483_Free_A4_Brochure_Mockup/
+*.psd
+*.ai
+__MACOSX/
+
+# Local tool config
+/.claude/

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDF Flipbook</title>
+<style>
+  :root {
+    --bg: #1e1e22;
+    --fg: #f2f2f2;
+    --muted: #9a9aa2;
+    --accent: #e8c07d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+  #stage {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+  }
+  #book { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  button, .file-label {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  button:hover, .file-label:hover { border-color: var(--accent); color: var(--accent); }
+  button:disabled { opacity: .35; cursor: default; }
+  #counter { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 80px; text-align: center; }
+  #status { color: var(--muted); font-size: 14px; }
+  #file { display: none; }
+</style>
+</head>
+<body>
+
+  <div id="status">Loading PDF…</div>
+  <div id="stage"><div id="book"></div></div>
+
+  <div class="controls">
+    <button id="prev" disabled>&larr; Prev</button>
+    <span id="counter"></span>
+    <button id="next" disabled>Next &rarr;</button>
+    <label class="file-label">Open PDF<input type="file" id="file" accept="application/pdf"></label>
+  </div>
+
+  <!-- PDF.js renders PDF pages to canvas; StPageFlip provides the page-turn animation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+  <script>
+    // Default PDF to show. Override with ?pdf=path/to/file.pdf
+    const DEFAULT_PDF = 'All assets/AIFPPitchV2 1.pdf';
+    // Higher = sharper pages, but slower to render and more memory.
+    const RENDER_SCALE = 2;
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    const statusEl = document.getElementById('status');
+    const counterEl = document.getElementById('counter');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    let pageFlip = null;
+
+    async function renderPdfToImages(source) {
+      const pdf = await pdfjsLib.getDocument(source).promise;
+      const images = [];
+      let width = 0, height = 0;
+
+      for (let i = 1; i <= pdf.numPages; i++) {
+        statusEl.textContent = `Rendering page ${i} of ${pdf.numPages}…`;
+        const page = await pdf.getPage(i);
+        const viewport = page.getViewport({ scale: RENDER_SCALE });
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        images.push(canvas.toDataURL('image/jpeg', 0.9));
+        if (i === 1) { width = viewport.width / RENDER_SCALE; height = viewport.height / RENDER_SCALE; }
+      }
+      return { images, width, height };
+    }
+
+    function buildBook({ images, width, height }) {
+      if (pageFlip) pageFlip.destroy();
+      // destroy() removes the container, so recreate it
+      const stage = document.getElementById('stage');
+      stage.innerHTML = '<div id="book"></div>';
+
+      pageFlip = new St.PageFlip(document.getElementById('book'), {
+        width: Math.round(width),      // base size of ONE page
+        height: Math.round(height),
+        size: 'stretch',               // scale to fit the container
+        minWidth: 200,
+        maxWidth: 1000,
+        minHeight: 200,
+        maxHeight: 1400,
+        maxShadowOpacity: 0.5,
+        showCover: true,               // first page shown alone, like a book cover
+        mobileScrollSupport: false,
+        usePortrait: true              // single-page mode on narrow screens
+      });
+
+      pageFlip.loadFromImages(images);
+
+      const update = () => {
+        const idx = pageFlip.getCurrentPageIndex();
+        const total = pageFlip.getPageCount();
+        const spread = pageFlip.getOrientation() === 'landscape' && idx > 0 && idx + 1 < total;
+        counterEl.textContent = spread ? `${idx + 1}–${idx + 2} / ${total}` : `${idx + 1} / ${total}`;
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx + (spread ? 2 : 1) >= total;
+      };
+      pageFlip.on('flip', update);
+      pageFlip.on('changeOrientation', update);
+      update();
+      statusEl.textContent = '';
+    }
+
+    async function load(source) {
+      try {
+        statusEl.textContent = 'Loading PDF…';
+        buildBook(await renderPdfToImages(source));
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = location.protocol === 'file:'
+          ? 'Could not load the PDF. Serve this page over http (e.g. a local server), or use "Open PDF".'
+          : `Could not load the PDF: ${err.message}`;
+      }
+    }
+
+    prevBtn.onclick = () => pageFlip && pageFlip.flipPrev();
+    nextBtn.onclick = () => pageFlip && pageFlip.flipNext();
+    document.addEventListener('keydown', e => {
+      if (!pageFlip) return;
+      if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+      if (e.key === 'ArrowRight') pageFlip.flipNext();
+    });
+
+    document.getElementById('file').onchange = async e => {
+      const file = e.target.files[0];
+      if (file) load({ data: new Uint8Array(await file.arrayBuffer()) });
+    };
+
+    const params = new URLSearchParams(location.search);
+    load(encodeURI(params.get('pdf') || DEFAULT_PDF));
+  </script>
+</body>
+</html>

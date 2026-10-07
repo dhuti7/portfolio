@@ -29,6 +29,9 @@
     --metric-text: #B3B3B3;
     --contact-btn-border: #B3B3B3;
     --ticker-bg: rgba(238, 98, 112, 0.14);
+    --pill-bg: rgba(238, 98, 112, 0.10);
+    --metric-label: #BDBDBD;
+    --metric-bg: #111111;
     --overlay-dark: rgba(0, 0, 0, 0.12);
 }
 
@@ -49,6 +52,9 @@
     --metric-text: #181818;
     --contact-btn-border: #B3B3B3;
     --ticker-bg: rgba(230, 30, 50, 0.12);
+    --pill-bg: rgba(230, 30, 50, 0.08);
+    --metric-label: #3D3D3D;
+    --metric-bg: #F6F6F6;
     --overlay-dark: rgba(0, 0, 0, 0.04);
 }
 
@@ -509,10 +515,6 @@ body.intro-done .scroll-indicator {
     cursor: pointer;
 }
 
-.showcase-item:hover {
-    border-color: var(--highlight-color);
-}
-
 /* "View case study" pill that follows the pointer on card hover (Figma: Portfolio website / Cursor 150:44).
    Only on devices with a real mouse; touch keeps normal tap behavior. */
 .view-cursor {
@@ -568,6 +570,7 @@ body.intro-done .scroll-indicator {
 
 .showcase-link:hover {
     opacity: 1;
+    color: var(--text-main);
 }
 
 .showcase-item.reverse {
@@ -593,17 +596,22 @@ body.intro-done .scroll-indicator {
 .showcase-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    gap: 1rem;
+}
+
+/* Each Problem / Solution / Impact sits in a faint grey box. */
+.metric {
+    padding: 1.25rem;
+    background-color: var(--metric-bg);
+    border-radius: 12px;
 }
 
 .metric h4 {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: var(--highlight-color);
-    margin-bottom: 0.8rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--border-color);
+    color: var(--metric-label);
+    margin-bottom: 0.6rem;
 }
 
 .metric p {
@@ -626,7 +634,7 @@ body.intro-done .scroll-indicator {
     background-color: var(--bg-color);
 }
 
-.showcase-image-container:hover .showcase-img {
+.showcase-item:hover .showcase-img {
     transform: scale(1.05);
 }
 
@@ -642,7 +650,7 @@ body.intro-done .scroll-indicator {
     pointer-events: none;
 }
 
-.showcase-image-container:hover::after {
+.showcase-item:hover .showcase-image-container::after {
     background: transparent;
 }
 
@@ -661,7 +669,7 @@ body.intro-done .scroll-indicator {
     border-bottom: 1px solid var(--border-color);
 }
 
-/* Keyword pills (home page) — same tint as the hero ticker pill. */
+/* Keyword pills (home page) — lighter tint than the hero ticker pill. */
 .showcase-meta.showcase-tags {
     display: flex;
     flex-wrap: wrap;
@@ -672,9 +680,10 @@ body.intro-done .scroll-indicator {
 }
 
 .showcase-tag {
-    background: var(--ticker-bg);
+    background: var(--pill-bg);
+    color: var(--text-main);
     border-radius: 999px;
-    padding: 0.35em 0.9em;
+    padding: 0.525em 0.9em;
     line-height: 1.2;
     letter-spacing: 0.1em;
     white-space: nowrap;
@@ -688,10 +697,51 @@ body.intro-done .scroll-indicator {
 
 .showcase-desc {
     color: var(--showcase-desc);
-    font-size: 1.0rem;
+    font-size: 1.1rem;
     margin-bottom: 2.5rem;
-    line-height: 1.8;
-    font-weight: 300;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* Lead-in line directly above a How-might-we box: tighter gap so they read as one unit. */
+.showcase-desc--lead {
+    margin-bottom: 1rem;
+}
+
+/* How-might-we statement on a showcase card — a sticky note, slightly tilted,
+   with a strip of tape. Paper stays yellow in both themes, like a real note. */
+.showcase-hmw {
+    position: relative;
+    max-width: 22rem;
+    margin: 0.5rem 0 2.5rem 0.25rem;
+    padding: 1.75rem 1.5rem 1.5rem;
+    background: linear-gradient(180deg, #FFF6B8 0%, #FFEE94 100%);
+    border-radius: 2px 2px 2px 18px / 2px 2px 2px 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08), 3px 8px 14px -6px rgba(0, 0, 0, 0.25);
+    color: #E61E32;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.5;
+    transform: rotate(-1.5deg);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tape strip */
+.showcase-hmw::before {
+    content: '';
+    position: absolute;
+    top: -0.6rem;
+    left: 50%;
+    width: 5.5rem;
+    height: 1.4rem;
+    background: rgba(225, 225, 220, 0.6);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+    transform: translateX(-50%) rotate(2deg);
+}
+
+.showcase-item:hover .showcase-hmw {
+    transform: rotate(0deg);
 }
 
 .view-btn {
