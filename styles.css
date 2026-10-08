@@ -266,11 +266,12 @@ a:hover {
     align-items: center;
     justify-content: center;
     padding: 0.5rem;
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.theme-toggle:hover {
-    opacity: 0.7;
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    color: var(--highlight-color);
     transform: rotate(15deg);
 }
 
@@ -742,6 +743,12 @@ body.intro-done .scroll-indicator {
 
 .showcase-item:hover .showcase-hmw {
     transform: rotate(0deg);
+}
+
+/* Green sticky note variant (Camino card) — a pastel take on the sage green in the Camino artwork. */
+.showcase-hmw--green {
+    background: linear-gradient(180deg, #E4EFD3 0%, #D3E5BC 100%);
+    transform: rotate(1.5deg);
 }
 
 .view-btn {
@@ -1290,9 +1297,9 @@ body.intro-done .scroll-indicator {
 
 /* Case study wireframe (shared by all case study pages) */
 .cs {
-    max-width: 1200px;
+    max-width: 1440px;
     margin: 0 auto;
-    padding: 9rem 5% 6rem;
+    padding: 6rem 5% 6rem;
 }
 
 .cs h2 {
@@ -1322,7 +1329,17 @@ body.intro-done .scroll-indicator {
 
 /* Hero */
 .cs-hero {
-    margin-bottom: 3rem;
+    margin-bottom: 1.25rem;
+}
+
+.cs-hero .cs-subtitle {
+    margin-bottom: 0;
+}
+
+/* Cover image sits right under the hero */
+.cs-hero + .cs-img {
+    margin-top: 0;
+    margin-bottom: 5rem;
 }
 
 .cs-tags {
@@ -1330,24 +1347,28 @@ body.intro-done .scroll-indicator {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
+/* Same pill look as the home page .showcase-tag */
 .cs-tags li {
-    padding: 0.4rem 0.9rem;
-    border: 1px solid var(--mouse-border);
+    background: var(--pill-bg);
+    color: var(--text-main);
     border-radius: 999px;
-    font-size: 0.75rem;
+    padding: 0.525em 0.9em;
+    font-size: 0.8rem;
+    line-height: 1.2;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    white-space: nowrap;
 }
 
 .cs-title {
-    font-size: clamp(2.4rem, 5vw, 4rem);
-    line-height: 1.1;
-    margin: 0.5rem 0 1.5rem;
-    max-width: 18ch;
+    /* Sized so the title stays on one line at desktop widths */
+    font-size: clamp(1.3rem, calc(2.9vw - 8px), 2.15rem);
+    font-weight: 600;
+    line-height: 1.15;
+    margin: 0 0 0.75rem;
 }
 
 .cs-subtitle {
@@ -1373,7 +1394,7 @@ body.intro-done .scroll-indicator {
     margin-bottom: 0.4rem;
 }
 
-/* Inside a section (e.g. TL;DR) the details sit right under the label, no divider */
+/* Inside a section (e.g. Summary) the details sit right under the label, no divider */
 .cs-section .cs-details {
     margin-top: 0;
     padding-top: 0;
@@ -1382,6 +1403,20 @@ body.intro-done .scroll-indicator {
 
 .cs-details dd {
     font-weight: 400;
+}
+
+.cs-partner-logo {
+    display: block;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+}
+
+/* Logo text is dark on transparent, so give it a light backing in night mode */
+:root:not([data-theme="light"]) .cs-partner-logo {
+    background: #FFFFFF;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
 }
 
 /* Image placeholders */
@@ -1429,12 +1464,11 @@ body.intro-done .scroll-indicator {
     display: grid;
     grid-template-columns: 180px 1fr;
     gap: 4rem;
-    margin-top: 5rem;
 }
 
 .cs-toc {
     position: sticky;
-    top: 7rem;
+    top: 6rem;
     align-self: start;
 }
 
@@ -1443,16 +1477,17 @@ body.intro-done .scroll-indicator {
     display: flex;
     flex-direction: column;
     gap: 0.6rem;
-    margin-top: 1rem;
 }
 
 .cs-toc a {
     font-size: 0.9rem;
     color: var(--text-muted);
+    transition: color 0.2s ease;
 }
 
-.cs-toc a:hover {
-    color: var(--text-main);
+.cs-toc a:hover,
+.cs-toc a:focus-visible {
+    color: var(--highlight-color);
     opacity: 1;
 }
 
@@ -1463,17 +1498,22 @@ body.intro-done .scroll-indicator {
 .cs-section {
     padding-bottom: 6rem;
     margin-bottom: 6rem;
-    border-bottom: 1px solid var(--border-color);
     scroll-margin-top: 6rem;
 }
 
 .cs-section:last-child {
-    border-bottom: none;
     margin-bottom: 0;
 }
 
 .cs-eyebrow {
     margin-bottom: 1rem;
+}
+
+/* Section names (Summary, Problem…) in a softened tint of the highlight red */
+.cs-section > .cs-eyebrow {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--highlight-color) 75%, var(--bg-color));
 }
 
 /* Grids & cards */
@@ -1548,6 +1588,16 @@ body.intro-done .scroll-indicator {
     line-height: 1.7;
 }
 
+/* Collaborator names: plain lines, no bullets */
+#collaborators .cs-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+#collaborators .cs-subhead {
+    margin-top: 0;
+}
+
 .cs-subhead {
     margin-top: 3rem;
 }
@@ -1578,6 +1628,10 @@ body.intro-done .scroll-indicator {
 
 .cs-process p {
     font-size: 0.85rem;
+}
+
+.cs-process--4 {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 /* Insights */
@@ -1675,7 +1729,6 @@ body.intro-done .scroll-indicator {
     .cs-layout {
         grid-template-columns: 1fr;
         gap: 0;
-        margin-top: 3rem;
     }
 
     .cs-toc {
@@ -1689,7 +1742,7 @@ body.intro-done .scroll-indicator {
 
 @media (max-width: 768px) {
     .cs {
-        padding: 7rem 16px 4rem;
+        padding: 5.5rem 16px 4rem;
     }
 
     .cs-details {

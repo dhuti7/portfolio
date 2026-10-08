@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         showcaseItems.forEach(item => {
-            if (!item.querySelector('.showcase-link')) return; // unlinked cards (e.g. Camino) aren't clickable
+            if (!item.querySelector('.showcase-link')) return; // unlinked cards aren't clickable
             item.addEventListener('mouseenter', () => viewCursor.classList.add('is-active'));
             item.addEventListener('mouseleave', () => viewCursor.classList.remove('is-active'));
         });
