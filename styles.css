@@ -514,7 +514,8 @@ body.intro-done .scroll-indicator {
 .showcase-item {
     display: flex;
     gap: 3rem;
-    align-items: center;
+    /* top-align so the tags line up with the top edge of the image */
+    align-items: flex-start;
     margin-bottom: 8rem;
     padding: 4rem;
     border: 1px solid var(--border-color);
@@ -674,8 +675,13 @@ body.intro-done .scroll-indicator {
     background: transparent;
 }
 
+/* Text column stretches to the card height; the sticky note (with its lead-in line, if any)
+   is pushed to the bottom so it lines up with the bottom edge of the visuals. */
 .showcase-info {
     flex: 1;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
 }
 
 .showcase-meta {
@@ -711,21 +717,27 @@ body.intro-done .scroll-indicator {
 
 .showcase-title {
     font-size: 2.8rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     line-height: 1.1;
 }
 
 .showcase-desc {
     color: var(--showcase-desc);
     font-size: 1.1rem;
-    margin-bottom: 2.5rem;
-    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
     font-weight: 400;
 }
 
-/* Lead-in line directly above a How-might-we box: tighter gap so they read as one unit. */
+/* Lead-in line directly above a How-might-we box: tighter gap so they read as one unit,
+   and it moves to the bottom of the column together with the note. */
 .showcase-desc--lead {
+    margin-top: auto;
     margin-bottom: 1rem;
+}
+
+.showcase-desc--lead + .showcase-hmw {
+    margin-top: 0;
 }
 
 /* How-might-we statement on a showcase card — a sticky note, slightly tilted,
@@ -733,8 +745,8 @@ body.intro-done .scroll-indicator {
 .showcase-hmw {
     position: relative;
     max-width: 22rem;
-    margin: 0.5rem 0 2.5rem 0.25rem;
-    padding: 1.75rem 1.5rem 1.5rem;
+    margin: auto 0 0 0.25rem;
+    padding: 1.25rem;
     background: linear-gradient(180deg, #FFF6B8 0%, #FFEE94 100%);
     border-radius: 0.125rem 0.125rem 0.125rem 1.125rem / 0.125rem 0.125rem 0.125rem 0.625rem;
     box-shadow: 0 1px 0.125rem rgba(0, 0, 0, 0.08), 0.1875rem 0.5rem 0.875rem -6px rgba(0, 0, 0, 0.25);
@@ -768,6 +780,11 @@ body.intro-done .scroll-indicator {
 .showcase-hmw--green {
     background: linear-gradient(180deg, #E4EFD3 0%, #D3E5BC 100%);
     transform: rotate(1.5deg);
+}
+
+/* Blue sticky note variant (Navigation Guide card) — a pastel take on the guide's "Initial Doctor Visits" blue. */
+.showcase-hmw--blue {
+    background: linear-gradient(180deg, #E4EFFC 0%, #D2E4F9 100%);
 }
 
 .view-btn {
@@ -1278,6 +1295,7 @@ body.intro-done .scroll-indicator {
 
 .case-hero .showcase-title {
     font-size: 3.5rem;
+    margin-bottom: 1.5rem;
 }
 
 .case-cover {
@@ -1812,5 +1830,12 @@ body.intro-done .scroll-indicator {
     /* Keyword pills stay on one line, as on the reference screen. */
     .showcase-meta.showcase-tags {
         flex-wrap: nowrap;
+    }
+
+    /* Longer tag sets: slightly smaller pills so they stay on one line; wrap as a fallback
+       rather than widening the text column and shrinking the image. */
+    .showcase-meta.showcase-tags.showcase-tags--compact {
+        font-size: 0.72rem;
+        flex-wrap: wrap;
     }
 }

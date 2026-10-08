@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio — Arundhuti Bhattacharya</title>
+<style>
+  :root {
+    --bg: #1e1e22;
+    --fg: #f2f2f2;
+    --muted: #9a9aa2;
+    --accent: #e8c07d;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 16px;
+    overflow-x: hidden;
+  }
+  #stage {
+    width: 100%;
+    /* keep the whole spread on screen: 1.413 = width/height of two A4 pages side by side */
+    max-width: min(1200px, calc((100vh - 110px) * 1.413));
+    display: flex;
+    justify-content: center;
+  }
+  #book { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); }
+  .page { background: #fff; }
+  .page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  button {
+    background: transparent;
+    color: var(--fg);
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 8px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color .2s, color .2s;
+  }
+  button:hover { border-color: var(--accent); color: var(--accent); }
+  button:disabled { opacity: .35; cursor: default; }
+  .back-link {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 10;
+    color: var(--muted);
+    font-size: 14px;
+    text-decoration: none;
+    border: 1px solid var(--muted);
+    border-radius: 999px;
+    padding: 8px 18px;
+    transition: border-color .2s, color .2s;
+  }
+  .back-link:hover { border-color: var(--accent); color: var(--accent); }
+  #counter { color: var(--muted); font-variant-numeric: tabular-nums; min-width: 80px; text-align: center; }
+</style>
+</head>
+<body>
+
+  <a href="index.html#work" class="back-link">&larr; Back</a>
+
+  <div id="stage"><div id="book"></div></div>
+
+  <div class="controls">
+    <button id="prev" disabled>&larr; Prev</button>
+    <span id="counter"></span>
+    <button id="next">Next &rarr;</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+  <script>
+    // Pages pre-rendered from "Portfolio - Arundhuti_Bhattacharya.pdf".
+    // The PDF's landscape spreads were split into single A4 pages.
+    const PAGE_COUNT = 23;
+    const PAGE_DIR = 'portfolio-pages/';
+    const PAGE_W = 1200, PAGE_H = 1698;
+
+    const book = document.getElementById('book');
+    for (let i = 1; i <= PAGE_COUNT; i++) {
+      const page = document.createElement('div');
+      page.className = 'page';
+      if (i === 1) page.dataset.density = 'hard';  // stiff cover
+      const img = document.createElement('img');
+      img.src = PAGE_DIR + 'p' + String(i).padStart(2, '0') + '.jpg';
+      img.alt = `Page ${i}`;
+      img.loading = i <= 5 ? 'eager' : 'lazy';
+      page.appendChild(img);
+      book.appendChild(page);
+    }
+
+    const pageFlip = new St.PageFlip(book, {
+      width: PAGE_W / 2,             // base size of ONE page (scaled to fit)
+      height: PAGE_H / 2,
+      size: 'stretch',
+      minWidth: 200,
+      maxWidth: 1000,
+      minHeight: 280,
+      maxHeight: 1400,
+      maxShadowOpacity: 0.5,
+      showCover: true,               // cover shown alone, then two-page spreads
+      mobileScrollSupport: false,
+      usePortrait: true              // single page on narrow screens
+    });
+    pageFlip.loadFromHTML(document.querySelectorAll('.page'));
+
+    const counterEl = document.getElementById('counter');
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+
+    function update() {
+      const idx = pageFlip.getCurrentPageIndex();
+      const total = pageFlip.getPageCount();
+      const spread = pageFlip.getOrientation() === 'landscape' && idx > 0 && idx + 1 < total;
+      counterEl.textContent = spread ? `${idx + 1}–${idx + 2} / ${total}` : `${idx + 1} / ${total}`;
+      prevBtn.disabled = idx === 0;
+      nextBtn.disabled = idx + (spread ? 2 : 1) >= total;
+    }
+    pageFlip.on('flip', update);
+    pageFlip.on('changeOrientation', update);
+    update();
+
+    prevBtn.onclick = () => pageFlip.flipPrev();
+    nextBtn.onclick = () => pageFlip.flipNext();
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+      if (e.key === 'ArrowRight') pageFlip.flipNext();
+    });
+  </script>
+</body>
+</html>

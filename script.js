@@ -306,9 +306,16 @@ document.addEventListener('DOMContentLoaded', () => {
             viewCursor.style.top = `${e.clientY}px`;
         });
 
+        const cursorLabel = viewCursor.querySelector('.view-cursor-label');
+        const defaultLabel = cursorLabel.textContent;
+
         showcaseItems.forEach(item => {
             if (!item.querySelector('.showcase-link')) return; // unlinked cards aren't clickable
-            item.addEventListener('mouseenter', () => viewCursor.classList.add('is-active'));
+            item.addEventListener('mouseenter', () => {
+                // a card can override the pill text with data-cursor-label
+                cursorLabel.textContent = item.dataset.cursorLabel || defaultLabel;
+                viewCursor.classList.add('is-active');
+            });
             item.addEventListener('mouseleave', () => viewCursor.classList.remove('is-active'));
         });
     }
