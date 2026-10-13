@@ -1622,6 +1622,11 @@ body.intro-done .scroll-indicator {
     margin-bottom: 0.75rem;
 }
 
+.cs-stat-unit {
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
 .cs-callout {
     display: flex;
     align-items: center;

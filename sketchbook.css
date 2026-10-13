@@ -1,0 +1,832 @@
+/* Sketchbook design system (https://claude.ai/artifact/Nmqxyf3GSWXyuF49HeTA9v), layered over
+   styles.css: same markup and behaviour, restyled with the system's tokens.
+   Load after styles.css, with Fuzzy Bubbles added to the Google Fonts request. */
+
+/* Tokens, as named in the design system */
+:root {
+    --paper: #f7f5ee;
+    --paper-warm: #efe7de;
+    --ink: #1c1b19;
+    --ink-muted: #5c5850;
+    --line: #c5bcb4;
+    --marker: #f6da33;
+    --cobalt: #6a88f0;
+    --tangerine: #fe7348;
+    --chair-red: #e4502e;
+    --leaf: #cedaa4;
+
+    --font-serif: "DM Serif Text", Georgia, serif;
+    --font-sans: "Montserrat", system-ui, sans-serif;
+    --font-hand: "Fuzzy Bubbles", "Comic Sans MS", cursive;
+
+    --space-2: 0.5rem;
+    --space-4: 1rem;
+    --space-8: 2rem;
+    --space-16: 4rem;
+
+    --radius-none: 0;
+    --radius-sm: 0.25rem;
+    --radius-full: 9999px;
+}
+
+/* Map the site's variables onto the system (day) */
+:root,
+[data-theme="light"] {
+    --bg-color: var(--paper);
+    --bg-secondary: var(--paper-warm);
+    --text-main: var(--ink);
+    --title-color: var(--ink);
+    --text-muted: var(--ink-muted);
+    --text-desc: var(--ink);
+    --showcase-desc: var(--ink);
+    --metric-text: var(--ink);
+    --metric-label: var(--ink-muted);
+    --metric-bg: var(--paper);
+    --accent: var(--ink);
+    --on-accent: var(--ink);
+    --border-color: var(--line);
+    --mouse-border: var(--ink);
+    --contact-btn-border: var(--ink);
+    --highlight-color: var(--chair-red);
+    --ticker-bg: var(--marker);
+    --pill-bg: #e4d9cb;
+    --pill-border: #a99d90;
+    --overlay-dark: transparent;
+    --card-bg: var(--paper-warm);
+    --about-bg: var(--leaf);
+    --focus: var(--ink);
+}
+
+/* Night: not in the system yet; the same tokens inverted (paper on ink).
+   Colour blocks keep their values and ink text. */
+[data-theme="dark"] {
+    --bg-color: var(--ink);
+    --bg-secondary: #2a2825;
+    --text-main: var(--paper);
+    --title-color: var(--paper);
+    --text-muted: #b8b1a6;
+    --text-desc: var(--paper);
+    --showcase-desc: var(--paper);
+    --metric-text: var(--paper);
+    --metric-label: #b8b1a6;
+    --metric-bg: var(--ink);
+    --border-color: #4a463f;
+    --mouse-border: var(--paper);
+    --contact-btn-border: var(--paper);
+    --pill-bg: #46423c;
+    --pill-border: #736c62;
+    --card-bg: #2a2825;
+    --about-bg: #2a2825;
+    --focus: var(--paper);
+}
+
+body {
+    font-size: 1rem;
+    line-height: 1.625rem;
+}
+
+::selection {
+    background: var(--marker);
+    color: var(--ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 0.1875rem;
+}
+
+a:hover {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-decoration-color: var(--marker);
+    text-decoration-thickness: 0.2em;
+    text-underline-offset: 0.15em;
+}
+
+.showcase-link:hover {
+    text-decoration: none;
+}
+
+/* Type: serif headings (display-xl / display / title) */
+h1,
+h2,
+h3 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0;
+}
+
+/* label: tags, nav, metadata */
+.showcase-meta,
+.hero-skills,
+.metric h4,
+.footer-bottom,
+.socials {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Nav */
+.navbar {
+    padding: var(--space-2) var(--gutter);
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* Nav words and the theme toggle take chair red on hover (strokes follow currentColor) */
+.nav-word-link {
+    transition: color 0.3s ease;
+}
+
+.nav-word-link:hover,
+.nav-word-link:focus-visible,
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+    color: var(--chair-red);
+    text-decoration: none;
+}
+
+/* Hero */
+.hero-statement {
+    font-family: var(--font-sans);
+    color: var(--title-color);
+}
+
+.hero-statement-lead {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 4.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.0625rem;
+    margin-bottom: var(--space-8);
+}
+
+.hero-statement .ticker {
+    background: var(--marker);
+    color: var(--ink);
+    border-radius: var(--radius-full);
+}
+
+.hero-statement .ticker-dot {
+    background: var(--chair-red);
+}
+
+.hero-statement .ticker-cursor {
+    background: var(--ink);
+}
+
+.hero-skills {
+    gap: var(--space-2);
+    margin-top: var(--space-8);
+    color: var(--ink);
+}
+
+/* Tags: square paper cut-outs. The hero's four take the system's blocks. */
+.showcase-tag {
+    border-radius: var(--radius-none);
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    color: var(--text-main);
+    padding: var(--space-2) 0.75rem;
+    letter-spacing: 0.1em;
+}
+
+.hero-skills .showcase-tag {
+    border-color: transparent;
+    color: var(--ink);
+}
+
+.hero-skills .showcase-tag:nth-child(1) { background: var(--cobalt); }
+.hero-skills .showcase-tag:nth-child(2) { background: var(--tangerine); }
+.hero-skills .showcase-tag:nth-child(3) { background: var(--marker); }
+.hero-skills .showcase-tag:nth-child(4) { background: var(--leaf); }
+
+.mouse {
+    border: 2px solid var(--mouse-border);
+}
+
+.mouse::before {
+    background: var(--chair-red);
+}
+
+/* Selected work */
+.showcases {
+    padding: var(--space-16) var(--gutter);
+}
+
+.section-header {
+    margin-bottom: var(--space-16);
+}
+
+.section-header h2 {
+    font-size: 2.75rem;
+    line-height: 1.05;
+    margin-bottom: var(--space-4);
+}
+
+.section-header p {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.625rem;
+    font-weight: 400;
+    max-width: 68ch;
+}
+
+/* Cards: square, no shadow, set apart by a paper-warm ground */
+.showcase-item {
+    gap: var(--space-8);
+    padding: var(--space-8);
+    margin-bottom: var(--space-16);
+    border: none;
+    border-radius: var(--radius-none);
+    background: var(--card-bg);
+}
+
+.showcase-visuals {
+    gap: var(--space-8);
+}
+
+.showcase-image-container {
+    border: none;
+    border-radius: var(--radius-none);
+}
+
+.showcase-metrics {
+    gap: var(--space-4);
+}
+
+.metric {
+    padding: var(--space-4);
+    border-radius: var(--radius-none);
+    background: var(--metric-bg);
+}
+
+.metric h4 {
+    color: var(--metric-label);
+    margin-bottom: var(--space-2);
+}
+
+.metric p {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+
+/* Marker swipe behind the key phrases */
+.highlight {
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--marker);
+    border-radius: var(--radius-full);
+    padding: 0 0.3em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+
+.showcase-meta {
+    color: var(--text-main);
+    border-bottom-color: var(--border-color);
+}
+
+.showcase-meta.showcase-tags {
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.showcase-title {
+    font-size: 2.75rem;
+    line-height: 1.05;
+    margin-bottom: var(--space-4);
+}
+
+.showcase-desc {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    margin-bottom: var(--space-4);
+}
+
+/* How-might-we notes: flat colour blocks with a handwritten note, tilted, no shadow */
+.showcase-hmw {
+    background: var(--marker);
+    color: var(--ink);
+    border-radius: var(--radius-none);
+    box-shadow: none;
+    max-width: 26rem;
+    padding: 1.5rem;
+    font-family: var(--font-hand);
+    font-size: 1.25rem;
+    line-height: 1.4;
+    font-weight: 400;
+    -webkit-text-stroke: 0.45px currentColor; /* a touch heavier than regular; bold is too much */
+}
+
+/* Keep the lead-in line and the note right under the description instead of pinned to
+   the bottom of the column; the extra top margin clears the tape strip. */
+.showcase-desc--lead {
+    margin-top: 0;
+}
+
+.showcase-hmw {
+    margin-top: var(--space-4);
+}
+
+.showcase-desc--lead + .showcase-hmw {
+    margin-top: var(--space-4);
+}
+
+.showcase-hmw::before {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    box-shadow: none;
+}
+
+.showcase-hmw--blue {
+    background: var(--cobalt);
+}
+
+.showcase-hmw--green {
+    background: var(--leaf);
+}
+
+/* "View case study" cursor pill */
+.view-cursor {
+    background-color: var(--ink);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2);
+}
+
+[data-theme="light"] .view-cursor {
+    box-shadow: none;
+}
+
+[data-theme="dark"] .view-cursor {
+    background-color: var(--marker);
+}
+
+.view-cursor-label {
+    color: var(--paper);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+[data-theme="dark"] .view-cursor-label {
+    color: var(--ink);
+}
+
+/* About: a leaf wash */
+.about {
+    padding: var(--space-16) var(--gutter);
+    background: var(--about-bg);
+    border-top: none;
+    border-bottom: none;
+}
+
+.about-content {
+    gap: var(--space-16);
+}
+
+.about-img-container {
+    border: none;
+    border-radius: var(--radius-none);
+    box-shadow: none;
+}
+
+.about-content h2 {
+    font-size: 2.75rem;
+    line-height: 1.05;
+    margin-bottom: var(--space-4);
+}
+
+/* note: the subtitle is a margin note */
+.about-subtitle {
+    font-family: var(--font-hand);
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.4;
+    color: var(--text-main);
+    margin-bottom: var(--space-8);
+    transform: rotate(-1deg);
+    transform-origin: left center;
+}
+
+.about-content p {
+    font-size: 1rem;
+    line-height: 1.625rem;
+    margin-bottom: var(--space-4);
+}
+
+/* Footer */
+.footer {
+    padding: var(--space-16) var(--gutter) var(--space-8);
+}
+
+.footer h2 {
+    font-size: 4.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.0625rem;
+    margin-bottom: var(--space-8);
+}
+
+.contact-btn {
+    padding: var(--space-4) var(--space-8);
+    border: 2px solid var(--contact-btn-border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-size: 1rem;
+    line-height: 1.625rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.contact-btn:hover {
+    background: var(--marker);
+    color: var(--ink);
+    border-color: var(--ink);
+    text-decoration: none;
+}
+
+.footer-bottom {
+    padding-top: var(--space-8);
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+.socials {
+    gap: var(--space-8);
+}
+
+@media (max-width: 1024px) {
+    .showcase-item {
+        gap: var(--space-8);
+        padding: var(--space-4);
+        margin-bottom: var(--space-16);
+    }
+
+    .showcase-metrics {
+        gap: var(--space-4);
+    }
+
+    .hero-statement-lead,
+    .footer h2 {
+        font-size: 2.75rem;
+        line-height: 1.05;
+    }
+
+    .section-header h2,
+    .showcase-title,
+    .about-content h2 {
+        font-size: 1.625rem;
+        line-height: 1.2;
+    }
+
+    .about-content {
+        gap: var(--space-8);
+    }
+
+    .about-subtitle {
+        transform-origin: center;
+    }
+}
+
+@media (min-width: 1025px) {
+    .hero-statement-lead,
+    .footer h2 {
+        font-size: 4.5rem;
+    }
+}
+
+/* ------------------------------------------------------------------
+   Case study pages (.cs wireframe and the older .case-study layout)
+   ------------------------------------------------------------------ */
+
+.cs p,
+.case-section p {
+    color: var(--text-main);
+    font-size: 1rem;
+    line-height: 1.625rem;
+    font-weight: 400;
+}
+
+.cs h2,
+.case-section h2 {
+    font-size: 2rem;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+}
+
+.cs h3 {
+    font-weight: 600;
+}
+
+/* Hero */
+.cs-title,
+.case-hero .showcase-title {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.05;
+    margin-bottom: var(--space-4);
+}
+
+.cs-subtitle {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+/* Tags: the same square paper cut-outs as the home page */
+.cs-tags {
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+}
+
+.cs-tags li {
+    border-radius: var(--radius-none);
+    background: var(--pill-bg);
+    border: 1px solid var(--pill-border);
+    color: var(--text-main);
+    padding: var(--space-2) 0.75rem;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+/* label: eyebrows, detail terms, back link */
+.cs-details dt,
+.cs-eyebrow,
+.cs-toc-title,
+.case-back,
+.cs-quote cite,
+.cs-card h3 {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.cs-section > .cs-eyebrow {
+    font-size: 0.75rem;
+    color: var(--chair-red);
+    margin-bottom: var(--space-4);
+}
+
+.case-back {
+    border-bottom-color: var(--border-color);
+}
+
+.cs-details,
+.cs-next {
+    border-top-color: var(--border-color);
+}
+
+.cs-details dd {
+    color: var(--text-main);
+}
+
+/* A second term stacked in the same column (e.g. Duration under Partners) */
+.cs-details dd + dt {
+    margin-top: var(--space-8);
+}
+
+.cs-partner-logo {
+    border-radius: var(--radius-none);
+}
+
+/* Table of contents */
+.cs-toc a {
+    color: var(--text-muted);
+}
+
+.cs-toc a:hover,
+.cs-toc a:focus-visible {
+    color: var(--text-main);
+}
+
+/* Media: square, no frame */
+.cs-img,
+.cs-video,
+.cs-ph,
+.case-cover {
+    border-radius: var(--radius-none);
+}
+
+.case-cover {
+    border: none;
+}
+
+.cs-ph {
+    border-color: var(--line);
+    background-color: var(--card-bg);
+}
+
+.cs .cs-caption {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    color: var(--text-muted);
+}
+
+/* Cards: paper-warm ground, square, no border */
+.cs-card {
+    padding: var(--space-8);
+    border: none;
+    border-radius: var(--radius-none);
+    background: var(--card-bg);
+}
+
+.cs-card h3 {
+    margin-bottom: var(--space-2);
+}
+
+/* Key numbers: flat colour blocks with ink text, like the hero's skill tags */
+.cs-grid {
+    gap: var(--space-4);
+}
+
+.cs-stat {
+    padding: var(--space-8);
+    border-radius: var(--radius-none);
+    background-color: var(--cobalt);
+}
+
+.cs-stat:nth-child(2) { background-color: var(--tangerine); }
+.cs-stat:nth-child(3) { background-color: var(--leaf); }
+
+.cs-stat-num {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 4.5rem;
+    line-height: 0.95;
+    letter-spacing: -0.0625rem;
+    color: var(--ink);
+    margin-bottom: var(--space-4);
+}
+
+.cs .cs-stat p {
+    color: var(--ink);
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+}
+
+/* Frame: a thin ink outline grouping related blocks under a label (e.g. Impact stats) */
+.cs-frame {
+    margin-top: var(--space-8);
+    padding: var(--space-8);
+    border: 1px solid var(--text-main);
+}
+
+.cs .cs-frame-title {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-main);
+    margin-bottom: var(--space-4);
+}
+
+.cs-frame .cs-grid {
+    margin-top: 0;
+}
+
+.cs-callout {
+    border-left: none;
+    border-radius: var(--radius-none);
+    background-color: var(--card-bg);
+}
+
+.cs .cs-statement {
+    font-size: 2.75rem;
+    line-height: 1.05;
+    font-style: normal;
+    color: var(--text-main);
+}
+
+.cs-list {
+    color: var(--text-main);
+    font-weight: 400;
+    line-height: 1.625rem;
+}
+
+.cs-list a,
+.case-section a {
+    text-decoration: underline;
+    text-decoration-color: var(--marker);
+    text-decoration-thickness: 0.2em;
+    text-underline-offset: 0.15em;
+}
+
+/* Research process steps */
+.cs-process li {
+    border-top: 2px solid var(--text-main);
+}
+
+.cs-process li::before {
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--chair-red);
+}
+
+.cs .cs-process p {
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+}
+
+/* Insights fan: square paper cut-outs in the system's blocks, outlined in ink instead of shadowed */
+.cs-insight {
+    border-radius: var(--radius-none);
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    box-shadow: none;
+}
+
+.cs-insight:nth-child(5n+1) { --card-bg: var(--cobalt); }
+.cs-insight:nth-child(5n+2) { --card-bg: var(--marker); }
+.cs-insight:nth-child(5n+3) { --card-bg: var(--leaf); }
+.cs-insight:nth-child(5n+4) { --card-bg: var(--tangerine); }
+.cs-insight:nth-child(5n+5) { --card-bg: var(--paper-warm); }
+
+.cs-insight:hover,
+.cs-insight:focus-visible {
+    box-shadow: none;
+}
+
+.cs-insight:focus-visible {
+    outline-color: var(--focus);
+}
+
+.cs .cs-insight h3 {
+    opacity: 1;
+}
+
+.cs .cs-insight p:last-child {
+    color: var(--ink);
+    font-weight: 500;
+}
+
+/* Quotes: a paper-warm sheet, serif voice */
+.cs-quote {
+    padding: var(--space-8);
+    border: none;
+    border-radius: var(--radius-none);
+    background: var(--card-bg);
+}
+
+.cs .cs-quote p {
+    font-size: 1.625rem;
+    line-height: 1.3;
+    color: var(--text-main);
+}
+
+.cs-quote cite {
+    margin-top: var(--space-4);
+}
+
+.cs-next-card:hover {
+    text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+    .cs h2,
+    .case-section h2 {
+        font-size: 1.625rem;
+        line-height: 1.2;
+    }
+
+    .cs-stat-num,
+    .cs .cs-statement {
+        font-size: 2.75rem;
+        line-height: 1.05;
+    }
+}
+
+@media (max-width: 768px) {
+    .cs-card,
+    .cs-stat,
+    .cs-quote,
+    .cs-frame {
+        padding: var(--space-4);
+    }
+
+    .cs-insight {
+        border-radius: var(--radius-none);
+    }
+
+    .cs-insight:hover,
+    .cs-insight:focus-visible {
+        box-shadow: none;
+    }
+
+    .cs .cs-quote p {
+        font-size: 1.25rem;
+    }
+}
