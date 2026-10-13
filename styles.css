@@ -614,6 +614,34 @@ body.intro-done .scroll-indicator {
     aspect-ratio: 16/9;
 }
 
+/* Split card (Navigation Guide): tags + title span the full width on top, then the image sits
+   beside the description and sticky note, so both columns end up about the same height. */
+.showcase-item--split {
+    flex-wrap: wrap;
+    row-gap: 2rem;
+}
+
+.showcase-head {
+    flex-basis: 100%;
+}
+
+.showcase-head .showcase-title {
+    margin-bottom: 0;
+}
+
+/* Title sized to exactly span the card width, so it ends flush with the image's right edge.
+   27.95 ≈ the Camino title's width in ems; change it if the title text changes. */
+@media (min-width: 1025px) {
+    .showcase-head:has(.showcase-title--fit) {
+        container-type: inline-size;
+    }
+
+    .showcase-head .showcase-title--fit {
+        font-size: calc(100cqi / 27.95);
+        white-space: nowrap;
+    }
+}
+
 .showcase-metrics {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
