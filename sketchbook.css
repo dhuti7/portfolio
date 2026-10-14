@@ -351,6 +351,10 @@ h3 {
     background: var(--leaf);
 }
 
+.showcase-hmw--lilac {
+    background: #C9B6F0;
+}
+
 /* "View case study" cursor pill */
 .view-cursor {
     background-color: var(--ink);
@@ -773,16 +777,96 @@ h3 {
     font-weight: 500;
 }
 
-/* Quotes: a paper-warm sheet, serif voice */
+/* Paragraphs on the left (two thirds), a pull quote beside them on the right (one third) */
+.cs-split {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: var(--space-16);
+    align-items: start;
+}
+
+.cs-split-text > p {
+    max-width: 68ch;
+    margin-bottom: 1.25rem;
+}
+
+.cs-split .cs-quote {
+    margin-top: 0;
+}
+
+/* Quotes: a paper-warm card on a solid tangerine offset, with a thin inner frame
+   that breaks around a “ in the top-left corner and a ” in the bottom-right */
 .cs-quote {
-    padding: var(--space-8);
+    --quote-inset: 0.875rem;  /* frame distance from the card edge */
+    --quote-gap: 4.25rem;     /* where each frame line stops short of a quote mark */
+    position: relative;
+    padding: 4.25rem 3rem 3.75rem;
     border: none;
-    border-radius: var(--radius-none);
+    border-radius: 1.25rem;
     background: var(--card-bg);
+    box-shadow: 0.5rem 0.5rem 0 var(--tangerine);
+}
+
+/* Frame, top and right edges: starts after the opening mark, ends above the closing one */
+.cs-quote::before,
+.cs-quote::after {
+    content: "";
+    position: absolute;
+    border: 0 solid var(--text-main);
+    pointer-events: none;
+}
+
+.cs-quote::before {
+    top: var(--quote-inset);
+    right: var(--quote-inset);
+    bottom: var(--quote-gap);
+    left: var(--quote-gap);
+    border-top-width: 1.5px;
+    border-right-width: 1.5px;
+    border-top-right-radius: 0.75rem;
+}
+
+/* Frame, left and bottom edges: starts below the opening mark, ends before the closing one */
+.cs-quote::after {
+    top: var(--quote-gap);
+    right: var(--quote-gap);
+    bottom: var(--quote-inset);
+    left: var(--quote-inset);
+    border-left-width: 1.5px;
+    border-bottom-width: 1.5px;
+    border-bottom-left-radius: 0.75rem;
+}
+
+/* The two marks sit in the gaps, positioned against the card */
+.cs-quote p::before,
+.cs-quote cite::after {
+    position: absolute;
+    font-family: var(--font-serif);
+    font-style: normal;
+    font-size: 6rem;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text-main);
+}
+
+.cs-quote p::before {
+    content: "\201C";
+    top: 0.35rem;
+    left: 0.75rem;
+}
+
+.cs-quote cite::after {
+    content: "\201D";
+    right: 0.75rem;
+    bottom: -2.2rem;
 }
 
 .cs .cs-quote p {
-    font-size: 1.625rem;
+    font-family: var(--font-sans);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5rem;
     line-height: 1.3;
     color: var(--text-main);
 }
@@ -791,11 +875,21 @@ h3 {
     margin-top: var(--space-4);
 }
 
+.cs-quote-name + .cs-quote-role::before {
+    content: ", ";
+}
+
 .cs-next-card:hover {
     text-decoration: none;
 }
 
 @media (max-width: 1024px) {
+    /* Too narrow for two columns: the quote drops below the paragraphs */
+    .cs-split {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+    }
+
     .cs h2,
     .case-section h2 {
         font-size: 1.625rem;
@@ -812,9 +906,13 @@ h3 {
 @media (max-width: 768px) {
     .cs-card,
     .cs-stat,
-    .cs-quote,
     .cs-frame {
         padding: var(--space-4);
+    }
+
+    /* Keep the text clear of the frame and corner marks */
+    .cs-quote {
+        padding: 4rem 2rem 3.5rem;
     }
 
     .cs-insight {

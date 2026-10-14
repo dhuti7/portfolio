@@ -10,10 +10,9 @@
 :root {
     --font-serif: 'DM Serif Text', Georgia, serif;
     --font-sans: 'Montserrat', system-ui, sans-serif;
-    /* Side margins: 10% (or 5% on case studies) of the width, until the desktop
-       scale cap below is reached; past that the content stops widening and centres. */
+    /* Side margins: 10% of the width, until the desktop scale cap below is
+       reached; past that the content stops widening and centres. */
     --gutter: max(10%, calc((100% - 85.35rem) / 2));
-    --gutter-wide: max(5%, calc((100% - 96.02rem) / 2));
 }
 
 /* Desktop scaling: every size is in rem, so tying the root font size to the viewport
@@ -815,6 +814,12 @@ body.intro-done .scroll-indicator {
     background: linear-gradient(180deg, #E4EFFC 0%, #D2E4F9 100%);
 }
 
+/* Lilac sticky note variant (Douglass Park card) — echoes the purple restroom icons on the signage. */
+.showcase-hmw--lilac {
+    background: linear-gradient(180deg, #E6DCF8 0%, #D7C8F4 100%);
+    transform: rotate(-1deg);
+}
+
 .view-btn {
     display: inline-flex;
     align-items: center;
@@ -1305,9 +1310,7 @@ body.intro-done .scroll-indicator {
 
 /* Case study pages */
 .case-study {
-    max-width: 68.75rem;
-    margin: 0 auto;
-    padding: 10rem var(--gutter-wide) 8rem;
+    padding: 10rem var(--gutter) 8rem;
 }
 
 .case-back {
@@ -1362,9 +1365,8 @@ body.intro-done .scroll-indicator {
 
 /* Case study wireframe (shared by all case study pages) */
 .cs {
-    max-width: 90rem;
-    margin: 0 auto;
-    padding: 6rem var(--gutter-wide) 6rem;
+    /* Same side margins as the navbar, so content lines up with the logo and links */
+    padding: 6rem var(--gutter) 6rem;
 }
 
 .cs h2 {
@@ -1736,6 +1738,19 @@ body.intro-done .scroll-indicator {
 .cs-insight:nth-child(4) { --card-bg: #AAB97E; --rot: -1deg; left: 41%; top: 9%; z-index: 4; }
 .cs-insight:nth-child(5) { --card-bg: #FFE39B; --rot: 4deg;  left: 56%; top: 3%; z-index: 5; }
 
+/* Three-card fan (Douglass Park guiding questions): wider cards spread across the full width.
+   Desktop only — below 768px the fan stacks like the five-card version. */
+@media (min-width: 769px) {
+    .cs-insights--3 {
+        aspect-ratio: 1807 / 580;
+    }
+
+    .cs-insights--3 .cs-insight { width: 35%; }
+    .cs-insights--3 .cs-insight:nth-child(1) { --rot: -2deg; left: 0.5%; top: 7%; }
+    .cs-insights--3 .cs-insight:nth-child(2) { --rot: 2deg;  left: 32.5%; top: 1%; }
+    .cs-insights--3 .cs-insight:nth-child(3) { --rot: -1deg; left: 64.5%; top: 9%; }
+}
+
 .cs-insight:hover,
 .cs-insight:focus-visible {
     z-index: 10;
@@ -1821,6 +1836,22 @@ body.intro-done .scroll-indicator {
     margin: 0;
 }
 
+/* Photo pairs: equal-height crops side by side */
+.cs-gallery {
+    margin-bottom: 0.5rem;
+}
+
+.cs-gallery .cs-img {
+    margin: 0;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* Side-by-side comparison images are already 16:9, so don't crop them */
+.cs-gallery--wide .cs-img {
+    aspect-ratio: 16 / 9;
+}
+
 /* Embedded video (e.g. Vimeo) */
 .cs-video {
     position: relative;
@@ -1867,7 +1898,7 @@ body.intro-done .scroll-indicator {
 
 @media (max-width: 768px) {
     .cs {
-        padding: 5.5rem 1rem 4rem;
+        padding: 5.5rem var(--gutter) 4rem;
     }
 
     /* Too narrow to read a fan: stack the insight cards instead */
