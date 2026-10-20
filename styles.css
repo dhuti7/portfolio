@@ -1751,6 +1751,22 @@ body.intro-done .scroll-indicator {
     .cs-insights--3 .cs-insight:nth-child(3) { --rot: -1deg; left: 64.5%; top: 9%; }
 }
 
+/* Staggered fan (Camino): cards alternate high and low so each one shows a full-width
+   strip above or below its neighbours — a much bigger hover target than the thin slice
+   the plain fan leaves. Card height is rescaled so the cards keep the same size. */
+@media (min-width: 769px) {
+    .cs-insights--staggered {
+        aspect-ratio: 1807 / 900;
+    }
+
+    .cs-insights--staggered .cs-insight { height: 62.5%; }
+    .cs-insights--staggered .cs-insight:nth-child(1) { --rot: -1deg; left: 0;   top: 3%; }
+    .cs-insights--staggered .cs-insight:nth-child(2) { --rot: 2deg;  left: 13%; top: 33%; }
+    .cs-insights--staggered .cs-insight:nth-child(3) { --rot: -2deg; left: 28%; top: 2%; }
+    .cs-insights--staggered .cs-insight:nth-child(4) { --rot: 1deg;  left: 42%; top: 34%; }
+    .cs-insights--staggered .cs-insight:nth-child(5) { --rot: 3deg;  left: 56%; top: 4%; }
+}
+
 .cs-insight:hover,
 .cs-insight:focus-visible {
     z-index: 10;
