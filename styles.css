@@ -1886,6 +1886,11 @@ body.intro-done .scroll-indicator {
     border: 0;
 }
 
+/* Video captions span the video's width rather than the body-text measure */
+.cs-section > .cs-video + .cs-caption {
+    max-width: none;
+}
+
 /* Next projects */
 .cs-next {
     margin-top: 2rem;
