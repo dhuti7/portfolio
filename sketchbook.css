@@ -355,6 +355,10 @@ h3 {
     background: #C9B6F0;
 }
 
+.showcase-hmw--pink {
+    background: #F6C9D6;
+}
+
 /* "View case study" cursor pill */
 .view-cursor {
     background-color: var(--ink);

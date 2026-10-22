@@ -814,6 +814,10 @@ body.intro-done .scroll-indicator {
     background: linear-gradient(180deg, #E4EFFC 0%, #D2E4F9 100%);
 }
 
+.showcase-hmw--pink {
+    background: linear-gradient(180deg, #FBE1E8 0%, #F6C9D6 100%);
+}
+
 /* Lilac sticky note variant (Douglass Park card) — echoes the purple restroom icons on the signage. */
 .showcase-hmw--lilac {
     background: linear-gradient(180deg, #E6DCF8 0%, #D7C8F4 100%);
