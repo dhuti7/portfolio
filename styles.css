@@ -910,11 +910,6 @@ body.intro-done .scroll-indicator {
     margin-bottom: 1.25rem;
 }
 
-.about-more {
-    display: inline-block;
-    font-weight: 600;
-}
-
 /* About page */
 .about-page {
     /* Clears the fixed navbar */

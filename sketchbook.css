@@ -427,13 +427,6 @@ h3 {
     margin-bottom: var(--space-4);
 }
 
-.about-more {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-}
-
 /* About page */
 .about-page-title {
     font-size: 2.75rem;
