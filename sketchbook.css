@@ -119,9 +119,7 @@ h3 {
 /* label: tags, nav, metadata */
 .showcase-meta,
 .hero-skills,
-.metric h4,
-.footer-bottom,
-.socials {
+.metric h4 {
     font-family: var(--font-sans);
     font-size: 0.75rem;
     line-height: 1rem;
@@ -411,7 +409,7 @@ h3 {
 }
 
 /* note: the subtitle is a margin note */
-.about-subtitle {
+.about-content .about-subtitle {
     font-family: var(--font-hand);
     font-style: normal;
     font-weight: 400;
@@ -429,46 +427,121 @@ h3 {
     margin-bottom: var(--space-4);
 }
 
+.about-more {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* About page */
+.about-page-title {
+    font-size: 2.75rem;
+    line-height: 1.05;
+    margin-bottom: var(--space-4);
+}
+
+.about-beyond-note {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.625rem;
+}
+
+/* Margin note, like the about subtitle */
+.beyond-caption {
+    font-family: var(--font-hand);
+    line-height: 1.4;
+}
+
+/* Photo prints as plain white instant-film prints, outlined in ink like the rest of
+   the sketchbook (no shadow). Ink captions in both themes. */
+.beyond-card {
+    background: #fdfdfb;
+    border-color: var(--ink);
+    color: var(--ink);
+    --focus: var(--ink);
+}
+
 /* Footer */
+/* Ink block with paper text in both themes; the site variables are re-pointed inside
+   the footer. At night it lifts a step off the ink page so it still reads as a block. */
 .footer {
     padding: var(--space-16) var(--gutter) var(--space-8);
+    background: var(--ink);
+    border-top: none;
+    color: var(--paper);
+    --text-main: var(--paper);
+    --title-color: var(--paper);
+    --text-muted: #b8b1a6;
+    --border-color: rgba(247, 245, 238, 0.18);
+    --contact-btn-border: var(--paper);
+    --focus: var(--paper);
 }
 
-.footer h2 {
-    font-size: 4.5rem;
-    line-height: 0.95;
+[data-theme="dark"] .footer {
+    background: #2a2825;
+}
+
+.footer-statement {
     letter-spacing: -0.0625rem;
-    margin-bottom: var(--space-8);
 }
 
-.contact-btn {
-    padding: var(--space-4) var(--space-8);
+.footer-hand {
+    font-family: var(--font-hand);
+    -webkit-text-stroke: 0.45px currentColor;
+}
+
+/* Email underlined by hand: one uneven marker stroke (not a repeating wave) that dips,
+   rises and lifts off at the end. The stroke keeps its weight however wide the address is. */
+.footer-email {
+    font-family: var(--font-serif);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 14' preserveAspectRatio='none'%3E%3Cpath d='M3 8.5C22 6.5 38 10.5 58 8.6S96 5.2 121 7.4 160 10.6 186 8.1 228 4.9 252 7.2 284 7.6 297 4.2' fill='none' stroke='%23f6da33' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E") left bottom / 100% 0.5em no-repeat;
+    color: var(--paper);
+    padding: 0 0.15em 0.3em;
+}
+
+.footer-email:hover {
+    text-decoration: none;
+    background: var(--marker);
+    color: var(--ink);
+}
+
+.footer-copy {
     border: 2px solid var(--contact-btn-border);
     border-radius: var(--radius-sm);
     font-family: var(--font-sans);
-    font-style: normal;
-    font-size: 1rem;
-    line-height: 1.625rem;
+    font-size: 0.75rem;
     font-weight: 600;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.contact-btn:hover {
+.footer-copy:hover,
+.footer-copy.is-copied {
     background: var(--marker);
     color: var(--ink);
     border-color: var(--ink);
-    text-decoration: none;
 }
 
+.footer-links a {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.625rem;
+}
+
+/* Small print: quiet on purpose, paper at low strength */
 .footer-bottom {
     padding-top: var(--space-8);
     border-top: 1px solid var(--border-color);
-    color: var(--text-muted);
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    line-height: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: rgba(247, 245, 238, 0.5);
 }
 
-.socials {
-    gap: var(--space-8);
-}
 
 @media (max-width: 1024px) {
     .showcase-item {
@@ -481,8 +554,7 @@ h3 {
         gap: var(--space-4);
     }
 
-    .hero-statement-lead,
-    .footer h2 {
+    .hero-statement-lead {
         font-size: 2.75rem;
         line-height: 1.05;
     }
@@ -498,14 +570,13 @@ h3 {
         gap: var(--space-8);
     }
 
-    .about-subtitle {
+    .about-content .about-subtitle {
         transform-origin: center;
     }
 }
 
 @media (min-width: 1025px) {
-    .hero-statement-lead,
-    .footer h2 {
+    .hero-statement-lead {
         font-size: 4.5rem;
     }
 }

@@ -417,4 +417,21 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') handleSend();
         });
     }
+
+    // Footer: copy the email address, briefly confirming in the button label
+    document.querySelectorAll('.footer-copy').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(btn.dataset.copy);
+            } catch (err) {
+                return;
+            }
+            btn.textContent = 'Copied!';
+            btn.classList.add('is-copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('is-copied');
+            }, 1800);
+        });
+    });
 });
