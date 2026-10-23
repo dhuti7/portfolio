@@ -910,12 +910,7 @@ body.intro-done .scroll-indicator {
     margin-bottom: 1.25rem;
 }
 
-/* About page */
-.about-page {
-    /* Clears the fixed navbar */
-    padding-top: 4.5rem;
-}
-
+/* About: title and beyond-work section */
 .about-page-title {
     font-size: 3rem;
     margin-bottom: 0.5rem;
