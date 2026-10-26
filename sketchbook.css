@@ -202,14 +202,6 @@ h3 {
 .hero-skills .showcase-tag:nth-child(3) { background: var(--marker); }
 .hero-skills .showcase-tag:nth-child(4) { background: var(--leaf); }
 
-.mouse {
-    border: 2px solid var(--mouse-border);
-}
-
-.mouse::before {
-    background: var(--chair-red);
-}
-
 /* Selected work */
 .showcases {
     padding: var(--space-16) var(--gutter);
