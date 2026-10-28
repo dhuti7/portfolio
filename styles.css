@@ -1714,6 +1714,17 @@ body.intro-done .scroll-indicator {
     border-radius: 0.5rem;
 }
 
+/* Round seals are as tall as they are wide, so cap them smaller; they carry
+   their own colours, so no night-mode backing */
+.cs-partner-logo.cs-partner-logo--seal {
+    max-width: 6rem;
+}
+
+:root:not([data-theme="light"]) .cs-partner-logo--seal {
+    background: none;
+    padding: 0;
+}
+
 /* Image placeholders */
 .cs-ph {
     display: flex;
@@ -1834,6 +1845,48 @@ body.intro-done .scroll-indicator {
 
 .cs-stats {
     margin-top: 1.5rem;
+}
+
+/* One sketch per word of a sentence. The GIFs are drawn on white: multiply
+   drops the white into the light page, and in night mode an inverted copy
+   (hue turned back so the pink stays pink) drops black into the dark page */
+.cs-words {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.cs-word {
+    margin: 0;
+}
+
+/* Outline lives on the frame so the night-mode filter doesn't invert it */
+.cs-word-frame {
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+}
+
+.cs-word img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    mix-blend-mode: multiply;
+}
+
+:root:not([data-theme="light"]) .cs-word img {
+    filter: invert(1) hue-rotate(180deg);
+    mix-blend-mode: screen;
+}
+
+.cs .cs-word figcaption {
+    margin-top: 0.6rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--text-muted);
 }
 
 .cs-stat {
@@ -2281,6 +2334,10 @@ body.intro-done .scroll-indicator {
     .cs-grid--3,
     .cs-feature {
         grid-template-columns: 1fr;
+    }
+
+    .cs-words {
+        grid-template-columns: repeat(2, 1fr);
     }
 
     .cs-feature--reverse .cs-feature-text {

@@ -418,6 +418,45 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Word sketches: GIFs loop for 10s once in view, then rest on their last frame
+    // (a still PNG, since a GIF can't be paused) until hovered. Reduced motion
+    // already gets the still via <picture>, so this leaves those alone.
+    const wordSketches = document.querySelectorAll('.cs-word');
+    if (wordSketches.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const LOOP_MS = 10000;
+
+        wordSketches.forEach((word) => {
+            const img = word.querySelector('img');
+            const gif = img.getAttribute('src');
+            const still = gif.replace(/\.gif$/, '-still.png');
+            let timer;
+
+            const play = () => { clearTimeout(timer); img.src = gif; };
+            const stop = () => { clearTimeout(timer); img.src = still; };
+            const stopLater = () => { clearTimeout(timer); timer = setTimeout(stop, LOOP_MS); };
+
+            word.addEventListener('pointerenter', play);
+            // A tap has no "leave" worth waiting for, so touch gets another 10s run
+            word.addEventListener('pointerleave', (e) => {
+                if (e.pointerType === 'mouse') stop();
+                else stopLater();
+            });
+
+            word.stopLater = stopLater;
+        });
+
+        const wordObserver = new IntersectionObserver((entries, obs) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.stopLater();
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        wordSketches.forEach((word) => wordObserver.observe(word));
+    }
+
     // Footer: copy the email address, briefly confirming in the button label
     document.querySelectorAll('.footer-copy').forEach((btn) => {
         btn.addEventListener('click', async () => {
