@@ -769,6 +769,210 @@ h3 {
     margin-top: 0;
 }
 
+/* Main problem sketch (wheelchair): scattered sources on the left, act-before-discover on the right.
+   Boxes use uneven radii so the ink outline reads as hand-drawn. */
+.cs-problem-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: var(--space-8);
+}
+
+/* Numbered statement heading each panel, circled like a notebook point */
+.cs .cs-problem-step {
+    align-self: stretch;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    margin: 0 0 var(--space-8);
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    line-height: 1.2;
+    color: var(--text-main);
+}
+
+.cs-problem-num {
+    flex: none;
+    display: inline-grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border: 1.5px solid var(--text-main);
+    border-radius: 55% 45% 50% 50% / 50% 55% 45% 50%;
+    font-family: var(--font-hand);
+    font-size: 1rem;
+}
+
+/* "so…" arrow carrying point 1 into point 2 */
+.cs-problem-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    font-family: var(--font-hand);
+    color: var(--chair-red);
+}
+
+.cs-problem-link svg {
+    width: 3.5rem;
+    height: 1.25rem;
+}
+
+.cs-problem-link path {
+    fill: none;
+    stroke: var(--chair-red);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.cs-problem-panel {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: var(--font-hand);
+    color: var(--text-main);
+}
+
+.cs-problem-sources {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-2);
+}
+
+.cs-problem-sources li,
+.cs .cs-problem-box {
+    border: 1.5px solid var(--text-main);
+    border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+    font-family: var(--font-hand);
+    color: var(--text-main);
+    text-align: center;
+}
+
+.cs-problem-sources li {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.35rem 0.25rem;
+    font-size: 0.8125rem;
+    overflow-wrap: anywhere;
+}
+
+.cs-problem-sources li:nth-child(odd) { transform: rotate(-2deg); }
+.cs-problem-sources li:nth-child(even) { transform: rotate(1.5deg) translateY(0.4rem); }
+
+.cs-problem-funnel {
+    width: 100%;
+    height: 4.5rem;
+    margin: var(--space-2) 0;
+}
+
+.cs-problem-funnel path,
+.cs-problem-arrow path {
+    fill: none;
+    stroke: var(--text-main);
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+}
+
+.cs .cs-problem-box {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    font-size: 1.125rem;
+    line-height: 1.3;
+    font-weight: 400;
+}
+
+.cs-problem-box small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.cs .cs-problem-who {
+    padding: 0.6rem 1.5rem;
+    background: var(--marker);
+    color: var(--ink);
+}
+
+.cs .cs-problem-label {
+    align-self: flex-start;
+    margin: 0 0 var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.cs-problem-flow {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 3.5rem minmax(0, 1fr);
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.cs-problem-arrow {
+    width: 100%;
+    height: 1.25rem;
+}
+
+.cs .cs-problem-cost {
+    align-self: flex-end;
+    margin: var(--space-2) 0 var(--space-8);
+    font-family: var(--font-hand);
+    color: var(--chair-red);
+}
+
+.cs .cs-problem-cost--center {
+    align-self: center;
+    margin-bottom: 0;
+}
+
+.cs .cs-problem-box--good {
+    background: var(--leaf);
+    color: var(--ink);
+}
+
+.cs-problem-box--good small {
+    color: var(--ink-muted);
+}
+
+.cs-problem-panel figcaption {
+    margin-top: auto;
+    padding-top: var(--space-4);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.375rem;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .cs-problem-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+
+    .cs-problem-link svg {
+        transform: rotate(90deg);
+    }
+
+    .cs .cs-problem-step {
+        font-size: 1.125rem;
+    }
+
+    .cs-problem-sources li {
+        font-size: 0.6875rem;
+    }
+}
+
 .cs-callout {
     border-left: none;
     border-radius: var(--radius-none);
