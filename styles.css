@@ -2137,6 +2137,31 @@ body.intro-done .scroll-indicator {
     .cs-insights--staggered.cs-insights--detail .cs-insight {
         height: auto;
     }
+
+    /* Three-card version (Phase 2 issues): one row of equal cards, tall enough that the
+       longest issue has room around it */
+    .cs-insights--3.cs-insights--detail {
+        aspect-ratio: 1807 / 570;
+    }
+
+    /* Landscape cards, overlapping more than the default three-card fan */
+    .cs-insights--3.cs-insights--detail .cs-insight {
+        width: 45%;
+        height: 28cqw;
+        padding: 3.6cqw 3.8cqw;
+    }
+
+    .cs-insights--3.cs-insights--detail .cs-insight:nth-child(1) {
+        left: 0.5%;
+    }
+
+    .cs-insights--3.cs-insights--detail .cs-insight:nth-child(2) {
+        left: 27.5%;
+    }
+
+    .cs-insights--3.cs-insights--detail .cs-insight:nth-child(3) {
+        left: 54.5%;
+    }
 }
 
 /* Hierarchy: insight leads (largest, semibold), the principle follows (smaller, regular),
@@ -2169,8 +2194,8 @@ body.intro-done .scroll-indicator {
 }
 
 /* Open card: the insight steps back so the principle takes the focus */
-.cs-insight:hover .cs-insight-text,
-.cs-insight:focus .cs-insight-text {
+.cs-insight:hover:has(.cs-insight-reveal) .cs-insight-text,
+.cs-insight:focus:has(.cs-insight-reveal) .cs-insight-text {
     opacity: 0.7;
 }
 
