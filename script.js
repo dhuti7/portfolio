@@ -473,4 +473,32 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1800);
         });
     });
+
+    // Captions marked .cs-caption--fit sit on one line that ends exactly at the image
+    // edge: the font is scaled to the caption's width (never above its normal size).
+    // If that would drop below 11px (phones), the caption wraps normally instead.
+    const fitCaptions = document.querySelectorAll('.cs-caption--fit');
+    const fitCaption = (el) => {
+        el.style.fontSize = '';
+        el.style.whiteSpace = 'nowrap';
+        const avail = el.clientWidth;
+        if (!avail) return; // hidden, e.g. inside a closed phase
+        const base = parseFloat(getComputedStyle(el).fontSize);
+        let size = Math.min(base, (base * avail) / el.scrollWidth);
+        if (size < 11) {
+            el.style.whiteSpace = '';
+            return;
+        }
+        el.style.fontSize = size + 'px';
+        while (el.scrollWidth > el.clientWidth && size > 11) {
+            size -= 0.1;
+            el.style.fontSize = size + 'px';
+        }
+    };
+    if (fitCaptions.length) {
+        const fitAll = () => fitCaptions.forEach(fitCaption);
+        const ro = new ResizeObserver((entries) => entries.forEach((e) => fitCaption(e.target)));
+        fitCaptions.forEach((el) => ro.observe(el));
+        if (document.fonts) document.fonts.ready.then(fitAll);
+    }
 });

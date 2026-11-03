@@ -829,17 +829,38 @@ h3 {
     outline-offset: 2px;
 }
 
-/* Small chevron: points down when closed, flips up when open */
+/* Bold chevron: points down when closed, flips up when open. While a row is closed it
+   nudges downward every few seconds to invite a click; hovering makes it bob faster. */
 .cs-phases-head::after {
     content: "";
     align-self: center;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-right: 0.25rem;
-    border-right: 1.5px solid currentColor;
-    border-bottom: 1.5px solid currentColor;
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-right: 0.35rem;
+    border-right: 3px solid currentColor;
+    border-bottom: 3px solid currentColor;
     transform: translateY(-25%) rotate(45deg);
     transition: transform 0.2s ease;
+}
+
+.cs-phases-row:not([open]) > .cs-phases-head::after {
+    animation: cs-phases-nudge 2.4s ease-in-out infinite;
+}
+
+.cs-phases-row:not([open]) > .cs-phases-head:hover::after {
+    animation-duration: 0.9s;
+}
+
+@keyframes cs-phases-nudge {
+    0%, 55%, 100% {
+        transform: translateY(-25%) rotate(45deg);
+    }
+    70% {
+        transform: translateY(35%) rotate(45deg);
+    }
+    85% {
+        transform: translateY(-10%) rotate(45deg);
+    }
 }
 
 .cs-phases-row[open] > .cs-phases-head::after {
@@ -849,6 +870,10 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
     .cs-phases-head::after {
         transition: none;
+    }
+
+    .cs-phases-row:not([open]) > .cs-phases-head::after {
+        animation: none;
     }
 }
 
@@ -862,6 +887,11 @@ h3 {
 .cs-phases-body > p {
     max-width: 68ch;
     margin-bottom: 1.25rem;
+}
+
+/* Captions run the full width of the image above them */
+.cs-phases-body > .cs-caption {
+    max-width: none;
 }
 
 .cs-phases-body > :last-child {
