@@ -879,9 +879,9 @@ h3 {
     margin-top: 0;
 }
 
-/* Phase 1 process map (wheelchair): seven step columns under two translucent bands,
-   Understand (leaf) and Make (cobalt), which overlap on the hand-over step.
-   Brackets above the steps show how the stages overlapped, each with its question. */
+/* Phase 1 process map (wheelchair): a bracket per stage on a 28-column grid, with the
+   stage's steps as sized boxes under it, so overlaps between stages show directly.
+   Rows 1–2 are empty (they held the Understand / Make bands and names). */
 .cs-proc {
     margin: 0 0 var(--space-8) calc(-1 * (7rem + var(--space-4)));
 }
@@ -889,37 +889,28 @@ h3 {
 .cs-proc-grid {
     display: grid;
     grid-template-columns: repeat(28, minmax(0, 1fr));
-    grid-template-rows: 1.25rem repeat(5, auto) 1.25rem;
 }
 
-.cs-proc-band {
-    grid-row: 1 / -1;
+/* Through line across the top, left to right, ending in an arrowhead: reads as time */
+.cs-proc-axis {
+    position: relative;
+    grid-row: 1;
+    grid-column: 1 / -1;
+    height: 0;
+    margin: 0.5rem var(--space-4) var(--space-8);
+    border-top: 1px solid var(--text-main);
 }
 
-.cs-proc-band--understand {
-    grid-column: 1 / 21;
-    background: color-mix(in srgb, var(--leaf) 45%, transparent);
-}
-
-.cs-proc-band--make {
-    grid-column: 17 / 29;
-    background: color-mix(in srgb, var(--cobalt) 16%, transparent);
-}
-
-/* Band names tucked into the band's top corner (pulled up into the padding row) */
-.cs .cs-proc-phase {
-    margin: -0.75rem var(--space-2) var(--space-4);
-    font-family: var(--font-sans);
-    font-size: 0.8125rem;
-    font-weight: 400;
-    line-height: 1.3;
-    color: color-mix(in srgb, var(--leaf) 35%, var(--text-main));
-}
-
-/* Each band name takes its band's hue, deepened toward the text colour so it stays legible */
-.cs .cs-proc-phase--end {
-    text-align: right;
-    color: color-mix(in srgb, var(--cobalt) 70%, var(--text-main));
+.cs-proc-axis::after {
+    content: "";
+    position: absolute;
+    top: calc(-0.25rem - 0.5px);
+    right: 0.05rem;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-top: 1px solid var(--text-main);
+    border-right: 1px solid var(--text-main);
+    transform: rotate(45deg);
 }
 
 /* Bracket: label and question over an ink line with a tick at each end */
@@ -998,6 +989,19 @@ h3 {
     color: var(--text-main);
 }
 
+/* Methods list under a step: small, plain lines with no markers */
+.cs .cs-proc-list {
+    margin: 0.5rem 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.cs .cs-proc-list li {
+    font-size: 0.75rem;
+    line-height: 1.1rem;
+    color: var(--text-main);
+}
+
 /* Loop note: hand-written, with a small cycle mark */
 .cs .cs-proc-step .cs-proc-loop {
     display: flex;
@@ -1028,8 +1032,15 @@ h3 {
     margin-top: var(--space-4);
 }
 
-/* Narrow screens: everything stacks in reading order; the bands can't overlap side
-   by side, so the panel fades from Understand to Make instead */
+/* Mixed 4:3 and 16:9 photos, cropped to one 4:3 frame so the row lines up */
+.cs-proc-photos img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* Narrow screens: everything stacks in reading order */
 @media (max-width: 1024px) {
     .cs-proc {
         margin-left: 0;
@@ -1037,23 +1048,10 @@ h3 {
 
     .cs-proc-grid {
         grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: none;
-        padding: 1.25rem 0;
-        background: linear-gradient(color-mix(in srgb, var(--leaf) 45%, transparent) 60%,
-                color-mix(in srgb, var(--cobalt) 16%, transparent));
     }
 
     .cs-proc-grid > * {
         grid-area: auto !important;
-    }
-
-    .cs-proc-band {
-        display: none;
-    }
-
-    .cs .cs-proc-phase--end {
-        margin-top: var(--space-8);
-        text-align: left;
     }
 
     .cs .cs-proc-span {
