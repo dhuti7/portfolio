@@ -148,7 +148,7 @@
 
                 <!-- 2. SUMMARY -->
                 <section id="summary" class="cs-section">
-                    <p class="cs-eyebrow">Summary</p>
+                    <h2 class="cs-eyebrow">Summary</h2>
 
                     <!-- Project details. Role, Timeline and Tools aren't on the ID page — add your own here. -->
                     <dl class="cs-details">
@@ -230,8 +230,7 @@
 
                 <!-- 3. PROBLEM -->
                 <section id="problem" class="cs-section">
-                    <p class="cs-eyebrow">Problem</p>
-                    <h2>A High-Stakes Decision Without a Map</h2>
+                    <h2 class="cs-eyebrow">Problem</h2>
                     <p>Getting a wheelchair for a child with medical complexity is a <strong
                             class="cs-mark">long</strong>
                         and <strong class="cs-mark">opaque</strong> process which is not only
@@ -279,93 +278,146 @@
                             <figcaption>Fragmented</figcaption>
                         </figure>
                     </div>
-                    <p>Currently, no comprehensive, caregiver-centered resource in the US clearly explains
+                    <p>Currently, no comprehensive, caregiver-centered resource in the United States clearly explains
                         the wheelchair acquisition experience from end to end. Caregivers must piece together
-                        information from multiple sources often discovering critical details only after
+                        information from multiple sources often discovering critical details after bearing
                         costly delays.</p>
-
-                    <!-- Main problem, as a sketch: (1) caregivers left to figure it out, so (2) they act before they discover -->
-                    <div class="cs-frame cs-problem">
-                        <h3 class="cs-frame-title">The main problem</h3>
-                        <div class="cs-problem-grid">
-                            <figure class="cs-problem-panel">
-                                <p class="cs-problem-step"><span class="cs-problem-num">1</span>Caregivers are left
-                                    to figure it out</p>
-                                <ul class="cs-problem-sources">
-                                    <li>Doctor</li>
-                                    <li>Therapist</li>
-                                    <li>Vendor</li>
-                                    <li>Insurance</li>
-                                    <li>Forums</li>
-                                </ul>
-                                <svg class="cs-problem-funnel" viewBox="0 0 300 60" preserveAspectRatio="none"
-                                    aria-hidden="true">
-                                    <path d="M30 4C52 22 98 38 140 54" />
-                                    <path d="M90 4C104 24 122 36 144 54" />
-                                    <path d="M150 4C147 22 152 38 150 54" />
-                                    <path d="M210 4C196 22 178 38 156 54" />
-                                    <path d="M270 4C246 24 204 40 160 54" />
-                                </svg>
-                                <p class="cs-problem-box cs-problem-who">Caregiver <span aria-hidden="true">?!</span></p>
-                                <p class="cs-problem-cost cs-problem-cost--center">→ frustration</p>
-                                <figcaption>Information arrives piece by piece, from many people, and it's on the
-                                    caregiver to put it together.</figcaption>
-                            </figure>
-
-                            <div class="cs-problem-link" aria-hidden="true">
-                                <span>so…</span>
-                                <svg viewBox="0 0 60 20">
-                                    <path d="M2 11C18 8 36 13 54 10M46 4L55 10 46 16" />
-                                </svg>
-                            </div>
-
-                            <figure class="cs-problem-panel">
-                                <p class="cs-problem-step"><span class="cs-problem-num">2</span>Action comes first,
-                                    vital information later</p>
-                                <p class="cs-problem-label">What happens</p>
-                                <div class="cs-problem-flow">
-                                    <p class="cs-problem-box">Act<small>e.g. pay</small></p>
-                                    <svg class="cs-problem-arrow" viewBox="0 0 60 20" aria-hidden="true">
-                                        <path d="M2 11C18 8 36 13 54 10M46 4L55 10 46 16" />
-                                    </svg>
-                                    <p class="cs-problem-box">Discover<small>vital information</small></p>
-                                </div>
-                                <p class="cs-problem-cost">→ costly delays</p>
-
-                                <p class="cs-problem-label">What should happen</p>
-                                <div class="cs-problem-flow">
-                                    <p class="cs-problem-box cs-problem-box--good">Discover<small>vital
-                                            information</small></p>
-                                    <svg class="cs-problem-arrow" viewBox="0 0 60 20" aria-hidden="true">
-                                        <path d="M2 11C18 8 36 13 54 10M46 4L55 10 46 16" />
-                                    </svg>
-                                    <p class="cs-problem-box cs-problem-box--good">Act<small>e.g. pay</small></p>
-                                </div>
-                                <figcaption>Many times, caregivers act first and only then discover what they
-                                    needed to know. That order should be reversed.</figcaption>
-                            </figure>
-                        </div>
-                    </div>
                 </section>
 
                 <!-- 4. PROCESS -->
                 <section id="process" class="cs-section">
-                    <p class="cs-eyebrow">Process</p>
-                    <h2>A Rigorous Research Approach</h2>
-                    <p>The team began by immersing themselves in the existing ecosystem—auditing 15+ patient
-                        navigation guides, analyzing conversations on Facebook and Reddit, and conducting
-                        in-depth interviews with parents and wheelchair professionals.</p>
-                    <p>What emerged was a critical mismatch. The hospital-based journey didn’t align with
-                        what families actually experienced. Through member-checking sessions and co-analysis
-                        workshops, the team validated their findings with both parents and healthcare
-                        partners, redefining the six stages of the journey from the caregiver’s
-                        perspective.</p>
+                    <h2 class="cs-eyebrow">Process</h2>
+                    <p>We developed the navigation guide over <strong class="cs-mark">2 phases</strong>.</p>
+
+                    <!-- Phases: one expandable row each (Phase 1 open on load); name and summary
+                         are the toggle, the write-up opens beneath the summary -->
+                    <div class="cs-phases">
+                        <details class="cs-phases-row" open>
+                            <summary class="cs-phases-head">
+                                <span class="cs-phases-name">Phase 1</span>
+                                <span class="cs-phases-desc">A semester-long collaboration between Institute of Design
+                                    and Lurie Children's Hospital to co-design and develop the guide.</span>
+                            </summary>
+                            <div class="cs-phases-body">
+                                <!-- Phase 1 process map: two overlapping tinted bands (Understand, Make). Under each
+                                     bracket, its steps are outlined boxes whose length shows how long the
+                                     step ran. 28 quarter-step columns, so steps can differ in length and
+                                     Analyzing data can start halfway along Secondary research.
+                                     Brackets carry the guiding question from the original semester plan.
+                                     Desktop placement is grid-area: row / column / row / column;
+                                     DOM order is the reading order, which is also the stacked layout. -->
+                                <figure class="cs-proc">
+                                    <div class="cs-proc-grid">
+                                        <span class="cs-proc-band cs-proc-band--understand" aria-hidden="true"></span>
+                                        <span class="cs-proc-band cs-proc-band--make" aria-hidden="true"></span>
+
+                                        <h5 class="cs-proc-phase" style="grid-area: 2 / 1 / 3 / 17">Understand</h5>
+
+                                        <p class="cs-proc-span" style="grid-area: 3 / 1 / 4 / 17">
+                                            Building context <em>What can we learn?</em></p>
+                                        <div class="cs-proc-step cs-proc-step--lead" style="grid-area: 4 / 1 / 5 / 5">
+                                            <h6>Onboarding</h6>
+                                            <p>Immersion in the topic and the hospital’s process</p>
+                                        </div>
+                                        <div class="cs-proc-step" style="grid-area: 4 / 5 / 5 / 10">
+                                            <h6>Secondary research</h6>
+                                            <p>Navigation guides and online caregiver communities</p>
+                                        </div>
+                                        <div class="cs-proc-step cs-proc-step--last" style="grid-area: 4 / 10 / 5 / 17">
+                                            <h6>Primary research</h6>
+                                            <p>Interviews with parents and wheelchair professionals</p>
+                                        </div>
+
+                                        <!-- Starts at the midpoint of Secondary research (line 7 of 29) -->
+                                        <p class="cs-proc-span cs-proc-span--below" style="grid-area: 5 / 7 / 6 / 21">
+                                            Analyzing data <em>What does this mean?</em></p>
+                                        <div class="cs-proc-step cs-proc-step--lead" style="grid-area: 6 / 7 / 7 / 14">
+                                            <h6>Coding qual data</h6>
+                                            <p>Coding interview transcripts for patterns</p>
+                                        </div>
+                                        <div class="cs-proc-step cs-proc-step--last" style="grid-area: 6 / 14 / 7 / 21">
+                                            <h6>Synthesizing</h6>
+                                            <p>Redrawing the six-stage journey from the caregiver’s side</p>
+                                            <p class="cs-proc-loop">
+                                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                                    <path d="M15.5 8A6 6 0 0 0 4.6 6.2M4.5 12a6 6 0 0 0 10.9 1.8" />
+                                                    <path d="M4 2.8v3.6h3.6M16 17.2v-3.6h-3.6" />
+                                                </svg>
+                                                Feedback / validation
+                                            </p>
+                                        </div>
+
+                                        <h5 class="cs-proc-phase cs-proc-phase--end" style="grid-area: 2 / 21 / 3 / 29">
+                                            Make</h5>
+
+                                        <p class="cs-proc-span" style="grid-area: 3 / 21 / 4 / 29">
+                                            Designing solution <em>What can it be?</em></p>
+                                        <div class="cs-proc-step cs-proc-step--lead" style="grid-area: 4 / 21 / 5 / 25">
+                                            <h6>Prototyping</h6>
+                                            <p>Sketch, critique, iterate</p>
+                                            <p class="cs-proc-loop">
+                                                <svg viewBox="0 0 20 20" aria-hidden="true">
+                                                    <path d="M15.5 8A6 6 0 0 0 4.6 6.2M4.5 12a6 6 0 0 0 10.9 1.8" />
+                                                    <path d="M4 2.8v3.6h3.6M16 17.2v-3.6h-3.6" />
+                                                </svg>
+                                                Feedback / critique loop
+                                            </p>
+                                        </div>
+                                        <div class="cs-proc-step cs-proc-step--last" style="grid-area: 4 / 25 / 5 / 29">
+                                            <h6>Final development</h6>
+                                            <p>Refining into the Overview Handout and 24-page Detailed Guide</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Process photos: replace each placeholder with
+                                         <img src="assets/wheelchair/process-N.jpg" alt="…" class="cs-img"> -->
+                                    <div class="cs-proc-photos">
+                                        <div class="cs-ph cs-ph--square">Photo 1</div>
+                                        <div class="cs-ph cs-ph--square">Photo 2</div>
+                                        <div class="cs-ph cs-ph--square">Photo 3</div>
+                                        <div class="cs-ph cs-ph--square">Photo 4</div>
+                                    </div>
+                                </figure>
+
+                                <h4>Secondary research</h4>
+                                <p>We began with secondary research, looking closely at the data and artifacts that
+                                    already existed. We reviewed patient navigation guides from clinics around the
+                                    world to understand how complex medical processes are typically communicated, and
+                                    explored online caregiver communities where people informally share their
+                                    experiences and frustrations with the wheelchair process.</p>
+                                <p>We also dug into the wheelchair itself.</p>
+
+                                <h4>Primary research</h4>
+                                <p>Next, we spoke with people who had been through wheelchair acquisition firsthand.
+                                    We wanted a grounded understanding of the journey: real perspectives from parents,
+                                    and insights from professionals who know both the devices and the system.</p>
+
+                                <h4>Synthesis</h4>
+                                <p>With both sets of data, we moved into synthesis, first within our internal team. We
+                                    tested different ways of modeling the journey, asking: <em>How can we reveal new
+                                        perspectives?</em> and <em>What format would communicate this clearly and
+                                        supportively for caregivers?</em></p>
+                                <p>This clarified the core design challenge: not just what information mattered, but
+                                    how it needed to be communicated. It set the foundation for the navigation guide
+                                    we created.</p>
+                            </div>
+                        </details>
+                        <details class="cs-phases-row">
+                            <summary class="cs-phases-head">
+                                <span class="cs-phases-name">Phase 2</span>
+                                <span class="cs-phases-desc">We refined the guide based on feedback from caregivers and
+                                    professionals at Lurie.</span>
+                            </summary>
+                            <div class="cs-phases-body">
+                                <p>[Phase 2 content goes here]</p>
+                            </div>
+                        </details>
+                    </div>
                 </section>
 
                 <!-- 5. OUTCOME -->
                 <section id="outcome" class="cs-section">
-                    <p class="cs-eyebrow">Outcome</p>
-                    <h2>A Two-Part Navigation System</h2>
+                    <h2 class="cs-eyebrow">Outcome</h2>
                     <p>The design process produced a comprehensive navigation system, an Overview Handout and
                         a 24-page Detailed Guide.</p>
 
@@ -407,8 +459,7 @@
 
                 <!-- 6. IMPACT -->
                 <section id="impact" class="cs-section">
-                    <p class="cs-eyebrow">Impact</p>
-                    <h2>Making the Invisible Visible</h2>
+                    <h2 class="cs-eyebrow">Impact</h2>
                     <p>This project addresses a significant gap in patient and caregiver education. By integrating
                         medical, technical, and lived-experience perspectives, the work supports more informed
                         decision-making and helps families consider how mobility devices affect daily life beyond
