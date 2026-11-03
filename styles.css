@@ -2187,7 +2187,8 @@ body.intro-done .scroll-indicator {
     font-weight: 500;
     line-height: 1.3;
     color: inherit;
-    transition: opacity 0.3s ease;
+    /* Slow, gentle fade in both directions, timed with the principle opening */
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     /* No one-word last lines: balance where pretty isn't supported (Firefox) */
     text-wrap: balance;
     text-wrap: pretty;
@@ -2204,7 +2205,7 @@ body.intro-done .scroll-indicator {
     display: grid;
     grid-template-rows: 0fr;
     opacity: 0;
-    transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease;
+    transition: grid-template-rows 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .cs-insight-reveal > div {
